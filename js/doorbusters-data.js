@@ -33,7 +33,7 @@ window.BF26_DOORBUSTERS = [
     url: 'https://www.performancebike.com/specialized-ambush-2-mountain-helmet-black-m-60222-0823/p1405154?v=1402713'
   },
   {
-    date: '2026-11-10', // MOCKUP: shows as Active today. Real date: '2026-11-24'
+    date: '2026-11-24',
     label: '',
     product: 'Continental Aero 111 Tubeless Tire (26mm)',
     brand: 'Continental',
@@ -81,7 +81,7 @@ window.BF26_DOORBUSTERS = [
     url: 'https://www.performancebike.com/lezyne-ktv-drive-ktv-drive-light-set-black-1-led-12p-v704/p1491393'
   },
   {
-    date: '2026-11-09', // MOCKUP: shows as Expired. Real date: '2026-11-27'
+    date: '2026-11-27',
     label: 'Black Friday',
     product: 'PNW Components Range Composite Pedals',
     brand: 'PNW Components',
