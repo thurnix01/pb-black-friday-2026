@@ -194,19 +194,20 @@ a:hover, span.link:hover { color: revert-rule; }
 }
 
 /* "PRE" above the logo and the tagline under it: Tungsten Medium, slanted along the logo's baseline
-   (skewY keeps the letters upright, like the logo's). Box = capital height (text-box trim) so the edges
-   line up with the logo: "PRE" on the B/F left edge, the tagline on the Y's right edge.
-   Logo letter positions come from bf-logo.svg (1 SVG unit = .1cqw at the logo's 35.6cqw width). */
+   (skewY keeps the letters upright, like the logo's). Box = capital height so the edges line up with
+   the logo: "PRE" on the B/F left edge, the tagline on the Y's right edge.
+   Logo letter positions come from bf-logo.svg (1 SVG unit = .1cqw at the logo's 35.6cqw width).
+   Tungsten metrics: ascent .96, descent .24, capitals .70. line-height .72 puts the baseline on the box's
+   bottom edge with the capitals .02em below its top (text-box trim does this too, but iOS Safari clips it). */
 .bf26-hero__pre,
 .bf26-hero__tag {
   position: absolute;
   font-family: var(--bf-font-display);
   font-weight: 500;
-  line-height: 1;
+  line-height: .72;
   color: var(--bf-white);
   text-transform: uppercase;
   white-space: nowrap;
-  text-box: trim-both cap alphabetic;
   transform: var(--bf-slant);
   animation: bf26-tag-in .8s var(--bf-ease) both .9s;
 }
@@ -222,6 +223,7 @@ a:hover, span.link:hover { color: revert-rule; }
   --bf-slant: skewY(-9.97deg);
   right: 63.89cqw; /* right edge of the Y's stem */
   top: 21.08cqw;   /* same gap below the Y's stem as "PRE" has above the B */
+  margin-top: -.02em; /* capitals start at `top` */
   font-size: 3.58cqw;
   transform-origin: 100% 0;
 }
@@ -413,7 +415,9 @@ a:hover, span.link:hover { color: revert-rule; }
 .bf26-deal__soon {
   display: inline-block;
   margin-bottom: 8px;
-  padding: 6px 10px;
+  /* Equal space above and below the capitals: Univers' capitals fill the top .72em of the line,
+     so the descender space (.28em) comes off the bottom padding */
+  padding: 6px 10px calc(6px - .28em);
   font-family: var(--bf-font-body);
   border-radius: 20px;
   background: var(--bf-black);
@@ -422,7 +426,6 @@ a:hover, span.link:hover { color: revert-rule; }
   line-height: 1;
   letter-spacing: .06em;
   text-transform: uppercase;
-  text-box: trim-both cap alphabetic; /* equal space above and below the capitals */
 }
 
 .bf26-deal__locked {
@@ -544,14 +547,13 @@ a:hover, span.link:hover { color: revert-rule; }
 }
 /* White label slanted along its baseline (letters stay upright), with a soft inner edge */
 .bf26-deal__stamp span {
-  padding: 12px 12px 10px;
+  padding: calc(12px - .02em) 12px 10px; /* line-height .72: capitals sit on the box's bottom edge (see hero) */
   background: var(--bf-white);
   box-shadow: inset 0 0 7px rgba(0, 0, 0, .3), 0 4px 14px rgba(0, 0, 0, .1);
   font-family: var(--bf-font-display);
   font-weight: 500;
   font-size: 78px;
-  line-height: 1;
-  text-box: trim-both cap alphabetic;
+  line-height: .72;
   text-transform: uppercase;
   white-space: nowrap;
   color: var(--bf-orange);
@@ -1224,7 +1226,7 @@ a:hover, span.link:hover { color: revert-rule; }
     left: 0;
     top: 0;
     width: 100cqw;
-   height: 28cqw;
+    height: 62cqw; /* fills the 62cqw-tall mobile frame */
     background-position: 62% center;
   }
   .bf26-hero__shape { width: 70cqw; }
@@ -1291,7 +1293,7 @@ a:hover, span.link:hover { color: revert-rule; }
   .bf26-deal.is-lead { zoom: 1.12; }
 }
 
-@media (prefers-reduced-motion: reduce) {
+@media (prefers-reduced-motion: reduce) {hind h
   .bf26 *, .bf26 *::before, .bf26 *::after {
     animation-duration: .01ms !important;
     animation-iteration-count: 1 !important;
