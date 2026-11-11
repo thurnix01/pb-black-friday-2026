@@ -677,6 +677,39 @@ a:hover, span.link:hover { color: revert-rule; }
 .bf26-signup .section + .section > div:has(> .field-validation-valid) { display: none; }
 .bf26-signup .bf26-recaptcha { zoom: .8; margin-right: auto; } /* Google's box is a fixed 304 x 78; button stays right */
 
+/* Sign-up confirmation: centered over the page, closes itself after 4s (main.js) */
+.bf26-toast {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: grid;
+  place-items: center;
+  padding: 16px;
+  background: rgba(0, 0, 0, .35);
+  cursor: pointer;
+  animation: bf26-fade-in .25s var(--bf-ease) both;
+}
+.bf26-toast.is-closing { opacity: 0; transition: opacity .3s var(--bf-ease); }
+#bf26 .bf26-toast__box {
+  max-width: 420px;
+  padding: 26px 40px 22px;
+  border-radius: 16px;
+  border-bottom: 6px solid var(--bf-orange);
+  background: var(--bf-white);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, .25);
+  font-family: var(--bf-font-display);
+  font-weight: 500;
+  font-size: 44px;
+  line-height: 1;
+  text-align: center;
+  text-transform: uppercase;
+  color: var(--bf-black);
+  animation: bf26-toast-in .45s var(--bf-ease-spring) both;
+}
+#bf26 .bf26-toast.is-error .bf26-toast__box { font-size: 28px; text-transform: none; border-bottom-color: var(--bf-dark-grey); }
+@keyframes bf26-fade-in { from { opacity: 0; } }
+@keyframes bf26-toast-in { from { opacity: 0; transform: translateY(16px) scale(.92); } }
+
 /* --- Sale by Discount ------------------------------------------------------- */
 
 .bf26-discounts {
@@ -829,8 +862,7 @@ a:hover, span.link:hover { color: revert-rule; }
   box-shadow: 0 3px 6px rgba(0, 0, 0, .18);
   cursor: pointer;
   transition: background .25s, transform .2s var(--bf-ease);
-   display: none;
-
+  display: none;
 }
 .bf26-pause:hover { background: var(--bf-orange); }
 .bf26-pause:active { transform: scale(.94); }
@@ -970,7 +1002,7 @@ a:hover, span.link:hover { color: revert-rule; }
   height: 28px;
   margin: 10px 4px 0;
   padding: .28em 0 0 !important; /* centers Univers capitals (same offset as .bf26-cart) */
-  border: 0 !important;
+  border: 0;
   border-radius: 3px;
   background: var(--bf-dark-grey);
   box-shadow: 0 3px 6px rgba(0, 0, 0, .18);
