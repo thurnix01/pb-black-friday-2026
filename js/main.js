@@ -154,6 +154,7 @@
   var scroller = document.querySelector('[data-doorbusters]');
   var cards = [];
   var ORDER = { upcoming: 0, live: 1, expired: 2 };
+  var MIN_CARDS = 3;
 
   function nextUpcoming() {
     return cards.filter(function (c) { return c.state === 'upcoming'; })[0];
@@ -196,6 +197,23 @@
       entry.el.style.setProperty('--bf-delay', (i * 80) + 'ms');
       scroller.appendChild(entry.el);
     });
+
+    // While later deals are still hidden, "More Deals / Coming Soon" cards fill the row out to three
+    Array.prototype.slice.call(scroller.querySelectorAll('.is-placeholder')).forEach(function (el) {
+      scroller.removeChild(el);
+    });
+    var shown = ordered.filter(function (c) { return rankOf(c) !== 3; }).length;
+    var waiting = ordered.length - shown;
+    for (var p = 0; p < Math.min(waiting, MIN_CARDS - shown); p++) {
+      var ph = document.createElement('li');
+      ph.className = 'bf26-deal is-placeholder';
+      ph.setAttribute('aria-hidden', 'true');
+      ph.style.setProperty('--bf-delay', ((shown + p) * 80) + 'ms');
+      ph.innerHTML = '<div class="bf26-deal__inner"><div class="bf26-deal__card">' +
+        '<p class="bf26-deal__soon-more"><span>More Deals</span>Coming Soon</p>' +
+      '</div></div>';
+      scroller.appendChild(ph);
+    }
   }
 
   function layoutDoorbusters(t, changedEntries) {
