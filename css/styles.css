@@ -969,7 +969,7 @@ a:hover, span.link:hover { color: revert-rule; }
   height: 28px;
   margin: 10px 4px 0;
   padding: .28em 0 0 !important; /* centers Univers capitals (same offset as .bf26-cart) */
-  border: 0;
+  border: 0 !important;
   border-radius: 3px;
   background: var(--bf-dark-grey);
   box-shadow: 0 3px 6px rgba(0, 0, 0, .18);
