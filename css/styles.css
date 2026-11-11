@@ -1070,8 +1070,7 @@ a:hover, span.link:hover { color: revert-rule; }
 .bf26-feature__price .bf26-price__was { font-size: 32px; }
 .bf26-feature__price .bf26-price__sale { font-size: 48px; }
 .bf26-feature__price .bf26-price__from { font-size: 32px; }
-.bf26-feature__price .bf26-price__was::after { content:": ";}
-.bf26-feature__price .bf26-price__sale::after { content:": ";}
+
 .bf26-feature__price .bf26-price__from::after { content:": ";}
 
 .bf26-top__arrow {
