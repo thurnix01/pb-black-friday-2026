@@ -8,7 +8,7 @@
  */
 
 // Logos: SVGs from the "All Logos" Figma file (Cycling Logos frame) in assets/brands/; brands not in that
-// file use the site's logo from images.amain.com/images/manufacturer_logos/. id = the brand's site ID (performancebike.com/.../b<id>),
+// file are traced from the brand's own logo. id = the brand's site ID (performancebike.com/.../b<id>),
 // used for the Black Friday results link (?fb=<id>). `as` shows another brand's card with extra wording.
 window.BF26_BRANDS = {
   'Specialized': { logo: 'assets/brands/specialized.svg', id: 2231 },
@@ -32,7 +32,7 @@ window.BF26_BRANDS = {
   'Schwalbe': { logo: 'assets/brands/schwalbe.svg', id: 1456 },
   'Lazer': { logo: 'assets/brands/lazer.svg', id: 1265 },
   'Terry': { logo: 'assets/brands/terry.svg', id: 1561 },
-  'Delta': { logo: 'https://images.amain.com/images/manufacturer_logos/delta.png', id: 1074 },
+  'Delta': { logo: 'assets/brands/delta.svg', id: 1074 }, // traced from Delta's site logo (no vector available)
   'WTB': { logo: 'assets/brands/wtb.svg', id: 1653 },
   'Continental Tire': { as: 'Continental' },
   'Shimano FTW': { as: 'Shimano', note: 'shoes' },
