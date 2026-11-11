@@ -1311,4 +1311,4 @@ a:hover, span.link:hover { color: revert-rule; }
 #search-bottom{margin: 12px auto 0; max-width: 1000px;}
 .page-block related {margin: 12px auto 0; max-width: 1000px;}
 @media (min-width: 767px) { #searchpage .flex-wrapper {  margin: 12px auto 0 !important; max-width: 1000px !important; } }
-._recommended-accessory-marketing { max-height: 284px !important; }
+._recommended-accessory-marketing { max-height: 284px !important; justify-content: end !important; }
