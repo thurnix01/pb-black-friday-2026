@@ -1229,7 +1229,7 @@ a:hover, span.link:hover { color: revert-rule; }
   .bf26-hero__shape { width: 70cqw; }
   .bf26-hero__shape--left  { left: -30cqw; top: -34cqw; }
   .bf26-hero__shape--right { left: 58cqw; top: 26cqw; }
-  .bf26-hero__logo { left: 19cqw; top: 6cqw; width: 62cqw; }
+  .bf26-hero__logo { left: 19cqw; top: 12cqw; width: 62cqw; }
   /* Same alignment, scaled with the logo (62cqw wide = 1.742x desktop) */
   .bf26-hero__pre { left: 23.25cqw;  top: 22.73cqw; font-size: 11.24cqw; }
   .bf26-hero__tag { right: 29.43cqw; top: 40.19cqw; font-size: 6.24cqw; }
