@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Black Friday Sale 2026 | Performance Bicycle</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Antonio:wght@500;600&family=Roboto+Condensed:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://images.amain.com/images/contentpages/performancebike/black-friday-2026/css/styles.css?v=20261110c">
+</head>
+<body>
+<main class="bf26" id="bf26">
+  <img class="bf26-watermark" src="https://images.amain.com/images/contentpages/performancebike/black-friday-2026/assets/ui/bf-watermark-top.svg" width="1468" height="396" alt="" aria-hidden="true">
+
+  <!-- Hero -->
+  <section class="bf26-hero" aria-label="Pre Black Friday: save up to 70%">
+    <div class="bf26-hero__photo" aria-hidden="true"></div>
+    <img class="bf26-hero__shape bf26-hero__shape--left" src="https://images.amain.com/images/contentpages/performancebike/black-friday-2026/assets/hero/hero-shape-left.svg" width="422" height="362" alt="" aria-hidden="true">
+    <img class="bf26-hero__shape bf26-hero__shape--right" src="https://images.amain.com/images/contentpages/performancebike/black-friday-2026/assets/hero/hero-shape-right.svg" width="422" height="362" alt="" aria-hidden="true">
+    <p class="bf26-hero__pre" aria-hidden="true">Pre</p>
+    <img class="bf26-hero__logo" src="https://images.amain.com/images/contentpages/performancebike/black-friday-2026/assets/hero/bf-logo.svg" width="356" height="237" alt="Black Friday">
+    <p class="bf26-hero__tag">Save up to 70%</p>
+  </section>
+
+  <!-- Doorbuster Deals -->
+  <section class="bf26-section bf26-doorbusters" aria-labelledby="bf26-db-title">
+    <h2 class="bf26-title bf26-title--xl" id="bf26-db-title" data-reveal>Doorbuster Deals</h2>
+    <!-- Filled in by main.js -->
+    <p class="bf26-countdown" data-countdown-line data-reveal hidden></p>
+    <div class="bf26-db" data-reveal>
+      <ul class="bf26-db__scroller" data-doorbusters tabindex="0" aria-label="Daily doorbuster deals"></ul>
+    </div>
+    <noscript><p class="bf26-countdown">Turn on JavaScript to see today&rsquo;s doorbuster.</p></noscript>
+  </section>
+
+  <!-- Doorbuster sign-up -->
+  <section class="bf26-section bf26-signup-section" aria-labelledby="bf26-signup-title">
+    <h2 class="bf26-title" id="bf26-signup-title" data-reveal>Get notified for Doorbuster Deals and more?</h2>
+    <!-- Same form and backend as the site's newsletter pop-up (/ajax/newsletter-modal); IDs prefixed with bf26- so they
+         can't clash with the pop-up, names unchanged for /newsletter-signup. main.js wires up the captcha and validation. -->
+    <form class="bf26-signup" action="https://www.performancebike.com/newsletter-signup" id="bf26-signup-form" method="post" data-signup data-reveal>
+      <input data-val="true" data-val-number="The field ContentID must be a number." data-val-required="The ContentID field is required." id="bf26-ContentID" name="ContentID" type="hidden" value="0">
+      <div class="section">
+        <div class="forminput">
+          <div><label for="bf26-FirstName">First name</label></div>
+          <div><input class="text-box single-line" data-val="true" data-val-length="Enter 2 to 32 characters" data-val-length-max="32" data-val-length-min="2" data-val-regex="Field contains invalid characters." data-val-regex-pattern="[\u0000-\u024F]+" data-val-required="First name is required" id="bf26-FirstName" placeholder="First name" name="FirstName" type="text" value="" autocomplete="given-name"></div>
+          <div><span class="field-validation-valid" data-valmsg-for="FirstName" data-valmsg-replace="true"></span></div>
+        </div>
+        <div class="forminput">
+          <div><label for="bf26-LastName">Last name</label></div>
+          <div><input class="text-box single-line" data-val="true" data-val-length="Enter 2 to 32 characters" data-val-length-max="32" data-val-length-min="2" data-val-regex="Field contains invalid characters." data-val-regex-pattern="[\u0000-\u024F]+" data-val-required="Last name is required" id="bf26-LastName" placeholder="Last name" name="LastName" type="text" value="" autocomplete="family-name"></div>
+          <div><span class="field-validation-valid" data-valmsg-for="LastName" data-valmsg-replace="true"></span></div>
+        </div>
+        <div class="forminput">
+          <div><label for="bf26-EmailAddress">Email</label></div>
+          <div><input class="text-box single-line" data-val="true" data-val-length="Enter 6 to 96 characters" data-val-length-max="96" data-val-length-min="6" data-val-required="Email address is required" id="bf26-EmailAddress" placeholder="Email" name="EmailAddress" type="email" value="" autocomplete="email"></div>
+          <div><span class="field-validation-valid" data-valmsg-for="EmailAddress" data-valmsg-replace="true"></span></div>
+        </div>
+      </div>
+      <div class="section">
+        <b>I want to also receive:</b>
+        <div id="bf26-list-memberships" class="bf26-signup__optin">
+          <input checked="checked" class="check-box" data-val="true" data-val-required="The Third Party Promotional Offers field is required." id="bf26-ThirdPartyOffers" name="ThirdPartyOffers" type="checkbox" value="true"><input name="ThirdPartyOffers" type="hidden" value="false">
+          <label for="bf26-ThirdPartyOffers">Third Party Promotional Offers</label>
+        </div>
+        <div><span class="field-validation-valid" data-valmsg-for="RecaptchaResponse" data-valmsg-replace="true"></span></div>
+        <div class="bf26-recaptcha" data-sitekey="6Ldy1jQUAAAAAI5rdXH_FpajIbOV94A4MEaH_MJF"></div>
+        <input id="bf26-RecaptchaResponse" name="RecaptchaResponse" type="hidden" value="">
+        <input name="commit" type="submit" value="Sign Up" class="css-button-disabled snap-css-button">
+      </div>
+    </form>
+  </section>
+
+  <!-- Sale by Discount -->
+  <section class="bf26-section" aria-labelledby="bf26-disc-title">
+    <h2 class="bf26-title" id="bf26-disc-title" data-reveal>Sale by Discount</h2>
+    <ul class="bf26-discounts">
+      <li data-reveal><a class="bf26-discount" href="https://www.performancebike.com/search?dc=brg_dyn_r3limbhany"><span>50%<br>Off</span></a></li>
+      <li data-reveal><a class="bf26-discount bf26-discount--sm" href="https://www.performancebike.com/search?dc=brg_dyn_bgn38oizvk"><span>40 to 50% Off</span></a></li>
+      <li data-reveal><a class="bf26-discount bf26-discount--sm" href="https://www.performancebike.com/search?dc=brg_dyn_w508xu2lv2"><span>25 to 40% Off</span></a></li>
+    </ul>
+  </section>
+
+  <!-- Daily Brand Deals: today's brand discounts, filled in by main.js from brand-sales-data.js -->
+  <section class="bf26-section" aria-labelledby="bf26-brands-title">
+    <h2 class="bf26-title" id="bf26-brands-title" data-reveal>Daily Brand Deals</h2>
+    <ul class="bf26-bsales" data-brand-sales data-reveal aria-label="Brands on sale today"></ul>
+  </section>
+
+  <!-- Top Black Friday Deals widget -->
+  <section class="bf26-section" aria-labelledby="bf26-top-title">
+    <div class="bf26-top" data-reveal>
+      <div class="bf26-top__featured" data-top-featured aria-live="polite"></div>
+      <div class="bf26-top__main">
+        <h2 class="bf26-title bf26-top__title" id="bf26-top-title">Top Black Friday Deals</h2>
+        <div class="bf26-top__carousel">
+          <button class="bf26-top__arrow bf26-top__arrow--prev" type="button" aria-label="Previous deals" data-top-prev>&#8249;</button>
+          <!-- Bloomreach renders the product list here; main.js feeds its items into the large panel -->
+          <div class="bf26-top__widget" data-top-widget>
+            {{WidgetTemplate=PB-PricingAddToCartSale,brg_dyn_ocgnvna1m0}}
+          </div>
+          <button class="bf26-top__arrow bf26-top__arrow--next" type="button" aria-label="More deals" data-top-next>&#8250;</button>
+        </div>
+        <div class="bf26-top__progress" aria-hidden="true"><span data-top-progress></span></div>
+        <a class="bf26-top__all" href="https://www.performancebike.com/top-black-friday-deals-promotional/c44971">View All Top deals <span aria-hidden="true">&#8250;</span></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sales by Categories -->
+  <section class="bf26-categories" aria-labelledby="bf26-cat-title">
+    <img class="bf26-categories__mark" src="https://images.amain.com/images/contentpages/performancebike/black-friday-2026/assets/ui/bf-watermark-footer.svg" width="1028" height="609" alt="" aria-hidden="true">
+    <h2 class="bf26-title bf26-title--light" id="bf26-cat-title" data-reveal>Sales by Categories</h2>
+    <ul class="bf26-categories__links">
+      <li data-reveal><a href="https://www.performancebike.com/accessories-black-friday-holiday-shopping-promotional/c26584">Accessories</a></li>
+      <li data-reveal><a href="https://www.performancebike.com/bikes-frames-black-friday-holiday-shopping-promotional/c26581">Bikes &amp; Frames</a></li>
+      <li data-reveal><a href="https://www.performancebike.com/maintenance-black-friday-holiday-shopping-promotional/c26585">Maintenance</a></li>
+      <li data-reveal><a href="https://www.performancebike.com/tires-tubes-black-friday-holiday-shopping-promotional/c26682">Tires &amp; Tubes</a></li>
+      <li data-reveal><a href="https://www.performancebike.com/cycling-clothing-sale/c44640">Clothing</a></li>
+      <li data-reveal><a href="https://www.performancebike.com/parts-black-friday-holiday-shopping-promotional/c26583">Parts</a></li>
+    </ul>
+  </section>
+</main>
+
+<!-- All files are hosted on images.amain.com; the script uses this base for the images it builds -->
+<script>window.BF26_ASSET_BASE = 'https://images.amain.com/images/contentpages/performancebike/black-friday-2026/';</script>
+<script src="https://images.amain.com/images/contentpages/performancebike/black-friday-2026/js/doorbusters-data.js"></script>
+<script src="https://images.amain.com/images/contentpages/performancebike/black-friday-2026/js/brand-sales-data.js?v=20261110b"></script>
+<script src="https://images.amain.com/images/contentpages/performancebike/black-friday-2026/js/main.js?v=20261110c"></script>
+</body>
+</html>

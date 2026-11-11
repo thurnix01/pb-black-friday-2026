@@ -1,0 +1,37 @@
+<svg width="393" height="116" viewBox="0 0 393 116" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Cycling Logos">
+<g id="Lazer">
+<g id="lazer logo 1">
+<path id="Fill 1 1" fill-rule="evenodd" clip-rule="evenodd" d="M311.5 43.3999V45.5999L312.2 43.3999H311.5Z" fill="black"/>
+<g id="Group 12 1">
+<g id="Group 4 1">
+<mask id="mask0_0_1" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="299" y="11" width="94" height="95">
+<g id="mask 2 2">
+<g id="Group">
+<path id="path 1 2" fill-rule="evenodd" clip-rule="evenodd" d="M299.151 11.1907H392.551V105.391H299.151V11.1907Z" fill="white"/>
+</g>
+</g>
+</mask>
+<g mask="url(#mask0_0_1)">
+<path id="Fill 2 1" fill-rule="evenodd" clip-rule="evenodd" d="M358.851 43.9907L353.651 48.9907L346.051 56.2908L353.551 35.4907H353.651H356.351C358.551 35.4907 360.051 36.1908 360.751 37.5908C360.951 37.8908 361.151 38.5906 361.151 39.3906C361.151 40.6906 360.751 42.2907 358.851 43.9907ZM383.051 54.3906C390.351 47.0906 392.651 40.1906 392.651 34.3906C392.651 29.3906 390.951 25.2907 389.351 22.4907C384.751 14.6907 376.251 11.1907 361.551 11.1907H353.751H332.651L312.051 69.1907L299.25 105.391H312.051H328.351L339.551 74.4907L352.951 105.391H353.751H383.151L367.451 69.4907L383.051 54.3906Z" fill="black"/>
+</g>
+</g>
+<path id="Fill 5 1" fill-rule="evenodd" clip-rule="evenodd" d="M312 11.2H265.7L250.7 49.8999L229.2 105H250.7H290.9L300.5 77H271.3L273.8 70.5H303.4L312 45.7998V44.2998H284.6L287 37.5999H312H315.3L324.8 11.2H312Z" fill="black"/>
+<g id="Group 9 1">
+<mask id="mask1_0_1" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="118" y="0" width="155" height="116">
+<g id="mask 4 2">
+<g id="Group_2">
+<path id="path 3 2" fill-rule="evenodd" clip-rule="evenodd" d="M118.468 0H272.168V115.5H118.468V0Z" fill="white"/>
+</g>
+</g>
+</mask>
+<g mask="url(#mask1_0_1)">
+<path id="Fill 7 1" fill-rule="evenodd" clip-rule="evenodd" d="M272.168 0H250.668H181.768L164.568 26.7998H207.368L150.068 84.5999L148.368 107.5H135.868H126.768L120.668 113.4L118.468 115.5H120.668H135.868H220.568L230.268 87.7998H188.768L250.668 22.7L272.168 0Z" fill="black"/>
+</g>
+</g>
+<path id="Fill 10 1" fill-rule="evenodd" clip-rule="evenodd" d="M120.7 61.7L120 66.5999H109.9L120.6 49.2L122.8 45.7L120.7 61.7ZM135.9 11.2H120.7H117.5L58.3 98.5999L66.9999 75.7998H40.7001L64.1 11.2H34.4999L0 105H86.2001L94 92.3999H116.4L114.7 105H120.6H135.8H145.6L153.2 11.2H135.9Z" fill="black"/>
+</g>
+</g>
+</g>
+</g>
+</svg>

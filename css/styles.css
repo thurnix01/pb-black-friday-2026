@@ -1,0 +1,1314 @@
+/* ==========================================================================
+   Black Friday 2026 landing page (Figma: Master-Promotion / Blog_01)
+   Everything is scoped under .bf26 so it can be dropped into an existing page.
+   ========================================================================== */
+
+/* Brand fonts: a locally installed copy first, then the webfonts performancebike.com
+   already hosts (same files the old Black Friday page used). Google fonts are the last fallback */
+@font-face {
+  font-family: "BF Tungsten";
+  src: local("Tungsten Medium"), local("Tungsten-Medium"),
+       url("https://www.performancebike.com/content/skins/performancebike/fonts/Tungsten-Medium.woff") format("woff");
+  font-weight: 500;
+  font-display: swap;
+}
+@font-face {
+  font-family: "BF Univers";
+  src: local("Univers LT Pro 57 Condensed"), local("UniversLTPro-Condensed"),
+       local("Univers LT Std 57 Condensed"), local("UniversLTStd-Cn"),
+       url("https://www.performancebike.com/content/skins/performancebike/fonts/UniversLTStd-Cn.woff2") format("woff2");
+  font-weight: 400;
+  font-display: swap;
+}
+
+:root {
+  --bf-black: #000000;
+  --bf-white: #ffffff;
+  --bf-light-grey: #f2f2f2;
+  --bf-card: #f9f9f9;
+  --bf-dark-grey: #464647;
+  --bf-mid-grey: #929292;
+  --bf-hero-bg: #222222;
+  --bf-orange: #d04500; /* Accessible Orange */
+
+  --bf-font-display: "BF Tungsten", "Tungsten", "Antonio", "Arial Narrow", sans-serif;
+  --bf-font-body: "BF Univers", "Univers LT Pro", "Roboto Condensed", "Arial Narrow", sans-serif;
+
+  --bf-ease: cubic-bezier(.22, .61, .36, 1);
+  --bf-ease-spring: cubic-bezier(.34, 1.56, .64, 1);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  margin: 0;
+  background: var(--bf-white);
+  color: var(--bf-black);
+  font-family: var(--bf-font-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+.bf26 {
+  position: relative;
+  max-width: 1200px;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+.bf26 ul { list-style: none; margin: 0; padding: 0; }
+.bf26 p { margin: 0; }
+:where(.bf26) a { color: inherit; text-decoration: none; } /* zero specificity so component colors win */
+
+/* --- Site overrides ---------------------------------------------------------
+   performancebike.com content pages style p / h2 / a / ul / li under
+   .info.single and #infopage, which outrank plain class selectors. */
+.info.single p { margin: revert-rule; }
+.info.single h2 { font-size: revert-rule; }
+.info.single a:not(.snap-css-button) { text-decoration: revert-rule; }
+a:hover, span.link:hover { color: revert-rule; }
+
+/* revert-rule falls back to the site's own rule (and isn't supported everywhere),
+   so the page also resets with a doubled ID, which outranks #infopage rules */
+#bf26#bf26 ul,
+#bf26#bf26 li { margin: 0; padding: 0; list-style: none; }
+#bf26#bf26 p { margin: 0; }
+#bf26#bf26 a { text-decoration: none; }
+#bf26#bf26 h2 {
+  margin: 0;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+.bf26 img { display: block; max-width: 100%; }
+
+.bf26 :focus-visible {
+  outline: 3px solid var(--bf-orange);
+  outline-offset: 3px;
+}
+
+/* Faint "BLACK FRIDAY" mark behind the hero */
+.bf26-watermark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  max-width: none !important;
+  height: auto;
+  pointer-events: none;
+}
+
+/* --- Shared ----------------------------------------------------------------- */
+
+.bf26-section {
+  position: relative;
+  padding: 0 16px;
+  margin-top: 87px;
+}
+
+.bf26-title {
+  margin: 0;
+  font-family: var(--bf-font-display);
+  font-weight: 500;
+  font-size: 58px;
+  line-height: 1.2;
+  letter-spacing: .02em;
+  text-transform: uppercase;
+  text-align: center;
+  color: var(--bf-black);
+}
+.bf26-title--xl { font-size: 74px; }
+.bf26-title--light { color: var(--bf-white); }
+#bf26 .bf26-title { font-size: 58px; }
+#bf26 .bf26-title--xl { font-size: 74px; }
+
+.bf26 [data-reveal] {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity .7s var(--bf-ease), transform .7s var(--bf-ease);
+  transition-delay: var(--bf-delay, 0ms);
+}
+.bf26 [data-reveal].is-visible { opacity: 1; transform: none; }
+
+/* --- Hero (1000 x 320, everything scales with the banner width) ------------- */
+
+.bf26-hero {
+  position: relative;
+  container-type: inline-size;
+  width: calc(100% - 32px);
+  max-width: 1000px;
+  /* 1000 x 320 banner. Height comes from padding (a % of the page width) rather than
+     aspect-ratio, which some browsers ignore together with container-type */
+  --hero-ratio: .32;
+  height: 0;
+  padding-bottom: min(calc(1000px * var(--hero-ratio)), calc((100% - 32px) * var(--hero-ratio)));
+  margin: 32px auto 0;
+  border-radius: 20px;
+  background: var(--bf-hero-bg);
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.bf26-hero__photo {
+  position: absolute;
+  left: -.1cqw;
+  top: -19.4cqw;
+  width: 100.1cqw;
+  height: 66.8cqw;
+  background: url("../assets/hero/hero-photo.jpg") center / cover no-repeat;
+  mix-blend-mode: lighten;
+  animation: bf26-drift 20s ease-in-out infinite alternate;
+}
+/* Radial vignette from the design */
+.bf26-hero__photo::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: .88;
+  mix-blend-mode: multiply;
+  background: radial-gradient(ellipse 58% 130% at 64% 44%,
+    rgba(102, 102, 102, 0) 0%,
+    rgba(51, 51, 51, .5) 50%,
+    rgba(26, 26, 26, .75) 75%,
+    rgba(13, 13, 13, .875) 87.5%,
+    rgba(6, 6, 6, .94) 93.75%,
+    #000 100%);
+}
+
+.bf26-hero__shape {
+  position: absolute;
+  width: 42.2cqw;
+  height: auto;
+  max-width: none !important;
+  pointer-events: none;
+}
+.bf26-hero__shape--left  { left: -12.2cqw; top: -23.2cqw; animation: bf26-shape-in-left 1.2s var(--bf-ease) both .1s; }
+.bf26-hero__shape--right { left: 69.6cqw; top: 0;        animation: bf26-shape-in-right 1.2s var(--bf-ease) both .1s; }
+
+.bf26-hero__logo {
+  position: absolute;
+  left: 6.5cqw;
+  top: 4.9cqw;
+  width: 35.6cqw;
+  height: auto;
+  max-width: none !important;
+  animation: bf26-logo-in 1s var(--bf-ease-spring) both .35s;
+}
+
+/* "PRE" above the logo and the tagline under it: Tungsten Medium, slanted along the logo's baseline
+   (skewY keeps the letters upright, like the logo's). Box = capital height (text-box trim) so the edges
+   line up with the logo: "PRE" on the B/F left edge, the tagline on the Y's right edge.
+   Logo letter positions come from bf-logo.svg (1 SVG unit = .1cqw at the logo's 35.6cqw width). */
+.bf26-hero__pre,
+.bf26-hero__tag {
+  position: absolute;
+  font-family: var(--bf-font-display);
+  font-weight: 500;
+  line-height: 1;
+  color: var(--bf-white);
+  text-transform: uppercase;
+  white-space: nowrap;
+  text-box: trim-both cap alphabetic;
+  transform: var(--bf-slant);
+  animation: bf26-tag-in .8s var(--bf-ease) both .9s;
+}
+.bf26-hero__pre {
+  --bf-slant: translateY(-100%) skewY(-9.97deg);
+  left: 8.94cqw;  /* B's left edge */
+  top: 11.06cqw;  /* baseline, just above the top of the B */
+  font-size: 6.45cqw;
+  transform-origin: 0 100%;
+  animation-delay: .5s;
+}
+.bf26-hero__tag {
+  --bf-slant: skewY(-9.97deg);
+  right: 63.89cqw; /* right edge of the Y's stem */
+  top: 21.08cqw;   /* same gap below the Y's stem as "PRE" has above the B */
+  font-size: 3.58cqw;
+  transform-origin: 100% 0;
+}
+
+@keyframes bf26-drift {
+  from { transform: scale(1) translate3d(0, 0, 0); }
+  to   { transform: scale(1.07) translate3d(-1.5%, 1.5%, 0); }
+}
+@keyframes bf26-shape-in-left {
+  from { opacity: 0; transform: translate(-12%, -12%); }
+  to   { opacity: 1; transform: none; }
+}
+@keyframes bf26-shape-in-right {
+  from { opacity: 0; transform: translate(12%, 12%); }
+  to   { opacity: 1; transform: none; }
+}
+@keyframes bf26-logo-in {
+  from { opacity: 0; transform: translateX(-24px) scale(.94); }
+  to   { opacity: 1; transform: none; }
+}
+@keyframes bf26-tag-in {
+  from { opacity: 0; transform: translateX(-16px) var(--bf-slant); }
+  to   { opacity: 1; transform: var(--bf-slant); }
+}
+
+/* --- Doorbuster Deals ------------------------------------------------------- */
+
+.bf26-doorbusters { margin-top: 53px; }
+
+.bf26-countdown {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 4px !important;
+  font-size: 16px;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+  color: var(--bf-dark-grey);
+}
+.bf26-countdown[hidden] { display: none; }
+.bf26-countdown[data-reveal] { --bf-delay: 200ms; } /* follows the title in */
+/* Label and time share a baseline; the larger time then drops by half the
+   difference in cap height (~.125em) so both sit on the same center line */
+.bf26-countdown > span,
+.bf26-countdown b { line-height: 1; }
+.bf26-countdown b {
+  position: relative;
+  top: .125em;
+  font-family: var(--bf-font-display);
+  font-weight: 500;
+  font-size: 24px;
+  letter-spacing: .04em;
+  color: var(--bf-orange);
+  font-variant-numeric: tabular-nums;
+}
+.bf26-countdown__dot {
+  position: relative;
+  top: -.15em; /* raises the dot to the middle of the label's capitals */
+  flex: none;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--bf-orange);
+  animation: bf26-pulse 1.6s ease-out infinite;
+}
+@keyframes bf26-pulse {
+  0%   { box-shadow: 0 0 0 0 rgba(208, 69, 0, .6); }
+  100% { box-shadow: 0 0 0 10px rgba(208, 69, 0, 0); }
+}
+
+/* One row in the order deals move through: next deal, today's deal, then past deals
+   (newest first). Each day main.js slides every card one place to the right. */
+.bf26-db {
+  --db-pop: 100px; /* room above the cards for the pop-out product images (and their hover zoom) */
+  position: relative;
+  max-width: 876px;
+  margin: 4px auto 0;
+}
+
+.bf26-db__scroller {
+  position: relative;
+  display: flex;
+  gap: 40px;
+  padding: var(--db-pop) 0 24px !important;
+  overflow-x: auto;
+  overflow-y: hidden;
+  overscroll-behavior-x: contain;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+}
+.bf26-db__scroller::-webkit-scrollbar { display: none; }
+.bf26-db__scroller:focus-visible { outline-offset: -3px; }
+/* Spacers center the row while it fits and collapse once it scrolls (negative margin cancels the gap) */
+.bf26-db__scroller::before,
+.bf26-db__scroller::after { content: ""; flex: 1 0 0; }
+.bf26-db__scroller::before { margin-right: -40px; }
+.bf26-db__scroller::after { margin-left: -40px; }
+
+/* Card */
+.bf26-deal {
+  position: relative;
+  flex: none;
+  width: 236px;
+  height: 308px;
+  zoom: 1.1; /* design size; phones shrink the smaller cards with zoom too */
+  animation: bf26-card-in .6s var(--bf-ease) backwards; /* backwards so :hover transforms still apply */
+  animation-delay: var(--bf-delay, 0ms);
+}
+.bf26-deal.is-hidden { display: none; } /* later "coming soon" deals wait off the page */
+@keyframes bf26-card-in {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: none; }
+}
+
+.bf26-deal__inner {
+  position: relative;
+  display: block;
+  height: 100%;
+  transition: transform .4s var(--bf-ease);
+}
+.bf26-deal.is-live .bf26-deal__inner:hover { transform: translateY(-8px); }
+
+.bf26-deal__card {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-radius: 19.5px;
+  background: var(--bf-card);
+  transition: box-shadow .4s var(--bf-ease);
+}
+.bf26-deal.is-live .bf26-deal__inner:hover .bf26-deal__card { box-shadow: 0 18px 34px rgba(0, 0, 0, .14); }
+
+/* Product image pops out above the card */
+.bf26-deal__media {
+  position: absolute;
+  left: 50%;
+  top: -60px;
+  z-index: 1;
+  width: 230px;
+  height: 180px; /* bottom edge sits clear of the product name */
+  transform: translateX(-50%);
+  pointer-events: none;
+  mix-blend-mode: multiply; /* white catalog photo backgrounds disappear into the card and page */
+}
+.bf26-deal.is-live .bf26-deal__media { pointer-events: auto; }
+.bf26-deal__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transform-origin: 50% 100%; /* hover zoom grows upward, away from the text */
+  transition: transform .5s var(--bf-ease), filter .5s var(--bf-ease);
+}
+.bf26-deal.is-live .bf26-deal__inner:hover .bf26-deal__media img { transform: scale(1.06); }
+
+.bf26-deal__placeholder {
+  display: grid;
+  place-items: center;
+  height: 150px;
+  margin-top: 40px;
+  font-family: var(--bf-font-display);
+  font-weight: 500;
+  font-size: 40px;
+  line-height: .9;
+  text-align: center;
+  text-transform: uppercase;
+  color: #d7d7d7;
+}
+
+/* "?" for deals not revealed yet */
+.bf26-deal__question {
+  position: absolute;
+  left: 50%;
+  top: -41px;
+  z-index: 1;
+  width: 112.5px;
+  height: 206px;
+  max-width: none !important;
+  transform: translateX(-50%);
+  transform-origin: 50% 80%;
+  transition: transform .6s var(--bf-ease);
+}
+.bf26-deal.is-upcoming .bf26-deal__inner:hover .bf26-deal__question { transform: translateX(-50%) scale(1.06); }
+
+/* Next deal teaser: product is shown, price stays locked until it goes live */
+.bf26-deal.is-teaser .bf26-deal__media img { filter: saturate(.85); }
+.bf26-deal.is-upcoming .bf26-deal__inner:hover .bf26-deal__media img { transform: scale(1.05); }
+
+.bf26-deal__soon {
+  display: inline-block;
+  margin-bottom: 8px;
+  padding: 6px 10px;
+  font-family: var(--bf-font-body);
+  border-radius: 20px;
+  background: var(--bf-black);
+  color: var(--bf-white);
+  font-size: 12px;
+  line-height: 1;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  text-box: trim-both cap alphabetic; /* equal space above and below the capitals */
+}
+
+.bf26-deal__locked {
+  margin-top: 6px !important;
+  font-size: 22.5px;
+  color: var(--bf-mid-grey);
+}
+.bf26-deal__locked::before {
+  content: "";
+  display: inline-block;
+  width: 12px;
+  height: 14px;
+  margin-right: 6px;
+  vertical-align: -1px;
+  background: currentColor;
+  -webkit-mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 14'><path d='M3 6V4a3 3 0 0 1 6 0v2h1a1 1 0 0 1 1 1v6a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1zm1.5 0h3V4a1.5 1.5 0 0 0-3 0z'/></svg>") center / contain no-repeat;
+          mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 14'><path d='M3 6V4a3 3 0 0 1 6 0v2h1a1 1 0 0 1 1 1v6a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1zm1.5 0h3V4a1.5 1.5 0 0 0-3 0z'/></svg>") center / contain no-repeat;
+}
+
+/* Name + prices sit on the bar; longer names grow upward. z-index keeps text above the pop-out image */
+.bf26-deal__info {
+  position: absolute;
+  left: 21px;
+  right: 21px;
+  bottom: 55px;
+  z-index: 2;
+  font-family: var(--bf-font-display);
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: .02em;
+}
+
+.bf26-deal__name {
+  max-width: 182px;
+  margin-bottom: 4px !important;
+  font-size: 28px;
+  line-height: .9;
+  color: var(--bf-black);
+}
+
+.bf26-deal__was {
+  margin-bottom: -6px !important;
+  font-size: 22.5px;
+  color: var(--bf-mid-grey);
+  text-decoration: line-through;
+}
+.bf26-deal__sale { font-size: 38px; color: var(--bf-orange); }
+
+.bf26-deal__more {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 204px;
+  font-family: var(--bf-font-display);
+  font-weight: 500;
+  font-size: 38px;
+  line-height: .9;
+  letter-spacing: .02em;
+  text-align: center;
+}
+.bf26-deal__day {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 176px;
+  font-size: 14px;
+  letter-spacing: .06em;
+  text-align: center;
+  text-transform: uppercase;
+  color: var(--bf-mid-grey);
+}
+
+/* Dark bar along the bottom of each card */
+.bf26-deal__bar {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 53px;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  background: var(--bf-dark-grey);
+  font-family: var(--bf-font-display);
+  font-weight: 500;
+  font-size: 24.3px;
+  letter-spacing: .02em;
+  color: var(--bf-white);
+  font-variant-numeric: tabular-nums;
+}
+.bf26-deal__bar span { position: relative; }
+.bf26-deal.is-live .bf26-deal__bar::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--bf-orange);
+  transform: translateX(-101%);
+  transition: transform .4s var(--bf-ease);
+}
+.bf26-deal.is-live .bf26-deal__inner:hover .bf26-deal__bar::before { transform: none; }
+
+/* Expired / sold out: the card blurs behind an "Expired!" stamp */
+.bf26-deal.is-expired .bf26-deal__media img,
+.bf26-deal.is-expired .bf26-deal__placeholder,
+.bf26-deal.is-expired .bf26-deal__info,
+.bf26-deal.is-expired .bf26-deal__bar span { filter: blur(6px); }
+.bf26-deal.is-expired .bf26-deal__media img { opacity: .85; }
+
+.bf26-deal__stamp {
+  position: absolute;
+  top: 50px;
+  left: 0;
+  right: 0;
+  height: 160px; /* centered just below the product image */
+  z-index: 3;
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+}
+/* White label slanted along its baseline (letters stay upright), with a soft inner edge */
+.bf26-deal__stamp span {
+  padding: 12px 12px 10px;
+  background: var(--bf-white);
+  box-shadow: inset 0 0 7px rgba(0, 0, 0, .3), 0 4px 14px rgba(0, 0, 0, .1);
+  font-family: var(--bf-font-display);
+  font-weight: 500;
+  font-size: 78px;
+  line-height: 1;
+  text-box: trim-both cap alphabetic;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--bf-orange);
+  transform: skewY(-10deg);
+  animation: bf26-stamp .5s var(--bf-ease-spring) both .15s;
+}
+@keyframes bf26-stamp {
+  from { opacity: 0; transform: skewY(-10deg) scale(2.2); }
+  to   { opacity: 1; transform: skewY(-10deg) scale(1); }
+}
+
+/* Flip when a card changes state while the page is open */
+.bf26-deal.is-changing .bf26-deal__inner { animation: bf26-flip .8s var(--bf-ease); }
+@keyframes bf26-flip {
+  0%   { transform: perspective(800px) rotateY(0); }
+  50%  { transform: perspective(800px) rotateY(90deg); opacity: .3; }
+  100% { transform: perspective(800px) rotateY(0); }
+}
+
+/* --- Doorbuster sign-up (site newsletter form, restyled) --------------------- */
+
+.bf26-signup-section { margin-top: 72px; }
+#bf26#bf26 #bf26-signup-title { margin-bottom: 16px; font-size: 40px; text-transform: none; letter-spacing: 0; }
+
+.bf26-signup {
+  max-width: 620px;
+  margin: 0 auto;
+  padding: 16px 22px 16px;
+  border-radius: 16px;
+  background: #f1f1f1;
+}
+.bf26-signup [type=submit] {
+  height: 36px;
+  padding: .2em 22px 0; /* Univers sits high in the box */
+  border: 0;
+  border-radius: 8px;
+  background: var(--bf-dark-grey);
+  font-family: var(--bf-font-body);
+  font-weight: 400;
+  font-size: 15px;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--bf-white);
+  cursor: pointer;
+  transition: background .25s;
+}
+.bf26-signup [type=submit]:hover { background: var(--bf-orange); }
+#bf26 .bf26-signup [type=submit].css-button-disabled { background: #b5b5b5; cursor: not-allowed; }
+
+.bf26-signup .section:first-of-type {
+  display: grid;
+  grid-template-columns: 1fr 1fr 2fr;
+  gap: 0 10px;
+}
+/* Labels stay for screen readers; the placeholder shows the field name */
+.bf26-signup label[for$="Name"],
+.bf26-signup label[for$="EmailAddress"] {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+#bf26 .bf26-signup .text-box::placeholder { color: #6f6f6f; opacity: 1; }
+#bf26 .bf26-signup .text-box {
+  box-sizing: border-box;
+  width: 100%;
+  height: 32px;
+  padding: 5px 12px 0;
+  border: 2px solid transparent;
+  border-radius: 8px;
+  background: #d9d9d9;
+  box-shadow: none;
+  font: 16px/1 var(--bf-font-body); /* 16px keeps iOS from zooming in on focus */
+  color: var(--bf-black);
+  transition: border-color .2s, background .2s;
+}
+#bf26 .bf26-signup .text-box:focus { outline: none; border-color: var(--bf-orange); background: var(--bf-white); }
+.bf26-signup .field-validation-error { display: block; margin-top: 4px; font-size: 14px; color: var(--bf-orange); }
+#bf26 .bf26-signup .input-validation-error { border-color: var(--bf-orange); }
+
+/* Opt-in, captcha and button on one row under the fields */
+.bf26-signup .section + .section {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px 16px;
+  margin-top: 12px;
+}
+.bf26-signup .section + .section > b { font-weight: 400; font-size: 14px; }
+.bf26-signup__optin { display: flex; align-items: center; gap: 6px; margin-right: auto; font-size: 14px; }
+.bf26-signup__optin input[type=checkbox] { width: 16px; height: 16px; margin: 0; accent-color: var(--bf-orange); }
+.bf26-signup .section + .section > div:has(> .field-validation-valid) { display: none; }
+.bf26-signup .bf26-recaptcha { zoom: .8; margin-right: auto; } /* Google's box is a fixed 304 x 78; button stays right */
+
+/* --- Sale by Discount ------------------------------------------------------- */
+
+.bf26-discounts {
+  display: flex;
+  justify-content: center;
+  gap: 80px;
+  margin-top: 28px !important;
+}
+
+.bf26-discount {
+  display: grid;
+  place-items: center;
+  width: 149px;
+  height: 149px;
+  padding: 12px;
+  border-radius: 14.6px;
+  background: var(--bf-dark-grey);
+  box-shadow: 2.9px 2.9px 2.9px rgba(0, 0, 0, .32);
+  color: var(--bf-white);
+  font-family: var(--bf-font-display);
+  font-weight: 500;
+  font-size: 58.8px;
+  line-height: .8;
+  letter-spacing: .02em;
+  text-align: center;
+  transition: transform .35s var(--bf-ease-spring), background .3s, box-shadow .35s var(--bf-ease);
+}
+.bf26-discount--sm { font-size: 51.6px; }
+.bf26-discount:hover {
+  background: var(--bf-orange);
+  transform: translateY(-8px) rotate(-3deg);
+  box-shadow: 6px 14px 22px rgba(0, 0, 0, .25);
+}
+.bf26-discount:active { transform: translateY(-2px) scale(.96); }
+
+/* --- Top Black Friday Deals widget ------------------------------------------ */
+
+.bf26-section:has(.bf26-top) { margin-top: 99px; }
+
+.bf26-top {
+  display: flex;
+  max-width: 940px;
+  min-height: 424px;
+  margin: 0 auto;
+  border-radius: 20px;
+  background: var(--bf-white);
+  overflow: hidden;
+}
+
+.bf26-top__featured {
+  position: relative;
+  flex: 0 0 307px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* product block sits in the vertical middle of the panel */
+  padding: 26px 30px 26px;
+  background: var(--bf-light-grey);
+}
+
+.bf26-feature {
+  display: flex;
+  flex-direction: column;
+  animation: bf26-feature-in .55s var(--bf-ease) both;
+}
+@keyframes bf26-feature-in {
+  from { opacity: 0; transform: translateX(-18px); }
+  to   { opacity: 1; transform: none; }
+}
+.bf26-feature__media {
+  position: relative;
+  display: block;
+  width: 246px;
+  overflow: hidden;
+  border-radius: 14px;
+  background: var(--bf-white);
+}
+.bf26-feature__img {
+  width: 246px;
+  height: 188px;
+  padding: 10px;
+  object-fit: contain;
+  transition: transform .5s var(--bf-ease);
+}
+/* Same SALE flag the widget uses on its items */
+.bf26-feature__tag {
+  position: absolute;
+  top: 0;
+  left: 12px;
+  z-index: 1;
+  width: 30px;
+  height: 61px;
+  background: url("https://www.performancebike.com/content/skins/shared/images/flags/tag-sale.png") center top / contain no-repeat;
+}
+.bf26-feature__media:hover .bf26-feature__img { transform: scale(1.06); }
+.bf26-feature__name {
+  margin-top: 18px !important;
+  font-size: 26px;
+  line-height: 1.25;
+}
+.bf26-cart {
+  position: relative;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  border-radius: 3px;
+  background: var(--bf-dark-grey);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, .18);
+  color: var(--bf-white);
+  font-family: var(--bf-font-body);
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: .03em;
+  text-transform: uppercase;
+  transition: transform .2s var(--bf-ease);
+}
+.bf26-cart::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--bf-orange);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform .35s var(--bf-ease);
+}
+.bf26-cart span { position: relative; top: .14em; } /* Univers sits high in its line box; this centers the capitals */
+.bf26-cart:hover::before { transform: scaleX(1); }
+.bf26-cart:active { transform: scale(.97); }
+
+.bf26-feature__actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 32px;
+}
+.bf26-feature .bf26-cart {
+  width: 171px;
+  height: 41px;
+  font-size: 17px;
+}
+
+/* Pause / play for the rotation: "II" while playing, a play triangle while paused */
+.bf26-pause {
+  position: relative;
+  flex: none;
+  width: 41px;
+  height: 41px;
+  padding: 0;
+  border: 0;
+  border-radius: 3px;
+  background: var(--bf-dark-grey);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, .18);
+  cursor: pointer;
+  transition: background .25s, transform .2s var(--bf-ease);
+}
+.bf26-pause:hover { background: var(--bf-orange); }
+.bf26-pause:active { transform: scale(.94); }
+.bf26-pause::before,
+.bf26-pause::after {
+  content: "";
+  position: absolute;
+  top: 13px;
+  width: 4px;
+  height: 15px;
+  border-radius: 1px;
+  background: var(--bf-white);
+}
+.bf26-pause::before { left: 14px; }
+.bf26-pause::after { right: 14px; }
+.bf26-pause[aria-pressed="true"]::before {
+  left: 16px;
+  width: 0;
+  height: 0;
+  border-radius: 0;
+  border-style: solid;
+  border-width: 8px 0 8px 12px;
+  border-color: transparent transparent transparent var(--bf-white);
+  background: none;
+}
+.bf26-pause[aria-pressed="true"]::after { display: none; }
+/* Progress line stops where it is while paused */
+.bf26-top__featured.is-stopped .bf26-top__timer { opacity: .5; }
+
+/* Rotating progress under the featured product */
+.bf26-top__timer {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 3px;
+  width: 100%;
+  background: var(--bf-orange);
+  transform-origin: left;
+  transform: scaleX(0);
+  transition: transform .1s linear; /* smooths the 100ms steps */
+}
+
+.bf26-top__main {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* list sits in the vertical middle of the featured panel */
+  padding: 22px 35px 22px 26px;
+}
+.bf26-top__title { text-align: left; }
+
+.bf26-top__carousel { position: relative; margin-top: 4px; }
+
+/* Bloomreach PB-SalesNoPricingNoAdd-Widget, restyled to match the page.
+   The widget brings its own CSS for .scroll-item etc., so these rules are ID-scoped */
+#bf26 .bf26-top__widget #lp-container { margin: 0 !important; }
+#bf26 .bf26-top__widget ._carousel { max-width: none; overflow: visible; }
+#bf26 .bf26-top__widget ._carousel-control { display: none !important; } /* our arrows drive it */
+#bf26 .bf26-top__widget .scroll-container {
+  gap: 14px;
+  margin: 0;
+  cursor: auto;
+  scrollbar-width: none;
+  /* The widget's own snap (x mandatory) re-snaps the list when the featured item collapses,
+     making it jump ahead and slide back; our arrows already step in whole items */
+  scroll-snap-type: none;
+  overflow-anchor: none;
+  align-items: flex-start; /* cards keep their own fixed height */
+}
+#bf26 .bf26-top__widget :is(.recommended-accessory-marketing-copy, ._recommended-accessory-marketing-copy) { flex: none; }
+#bf26 .bf26-top__widget .scroll-container::-webkit-scrollbar { display: none; }
+/* Fixed card: image 112.5 + title 8+64 + price 4+46 + button 10+28 + 10 bottom = 282.5 */
+#bf26 .bf26-top__widget .scroll-item {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  flex: 0 0 150px;
+  width: 150px;
+  height: 284px;
+  max-width: none;
+  max-height: none;
+  overflow: hidden;
+  margin: 0;
+  padding: 0 0 10px;
+  border-radius: 10px;
+  background: var(--bf-white);
+  mix-blend-mode: normal;
+}
+#bf26 .bf26-top__widget .scroll-item:hover { background: var(--bf-light-grey); }
+#bf26 .bf26-top__widget .scroll-item {
+  transition: flex-basis .6s var(--bf-ease), width .6s var(--bf-ease), margin .6s var(--bf-ease),
+              padding .6s var(--bf-ease), opacity .45s var(--bf-ease), background .3s;
+}
+/* The item shown in the large panel collapses out of the list (margin cancels its 14px gap) */
+#bf26 .bf26-top__widget .scroll-item.is-active {
+  flex-basis: 0;
+  width: 0;
+  min-width: 0;
+  margin-right: -14px;
+  padding: 0;
+  overflow: hidden;
+  opacity: 0;
+  pointer-events: none;
+}
+#bf26 .bf26-top__widget .bf26-instant .scroll-item { transition: none; }
+#bf26 .bf26-top__widget :is(.recommended-accessory-marketing-copy, ._recommended-accessory-marketing-copy) a { background: transparent; }
+#bf26 .bf26-top__widget :is(.recommended-accessory-marketing-copy, ._recommended-accessory-marketing-copy) > a:first-child {
+  display: block;
+  overflow: hidden;
+  border-radius: 10px;
+}
+#bf26 .bf26-top__widget .scroll-item img {
+  aspect-ratio: 4 / 3;
+  margin: 0;
+  object-fit: contain;
+  mix-blend-mode: darken;
+  transition: transform .4s var(--bf-ease);
+}
+#bf26 .bf26-top__widget .scroll-item:hover img { transform: scale(1.06); }
+#bf26 .bf26-top__widget :is(.recommended-accessory-marketing-title, ._recommended-accessory-marketing-title) {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  height: 64px; /* always 3 lines tall */
+  margin-top: 8px !important;
+  padding: 0 4px;
+  font-family: var(--bf-font-body);
+  font-size: 17px;
+  line-height: 1.25;
+  color: var(--bf-black);
+}
+#bf26 .bf26-top__widget a:is(.recommended-accessory-marketing-button, ._recommended-accessory-marketing-button) {
+  display: grid;
+  place-items: center;
+  height: 28px;
+  margin: 10px 4px 0;
+  padding: .28em 0 0 !important; /* centers Univers capitals (same offset as .bf26-cart) */
+  border: 0;
+  border-radius: 3px;
+  background: var(--bf-dark-grey);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, .18);
+  color: var(--bf-white);
+  font-family: var(--bf-font-body);
+  font-size: 13px !important;
+  line-height: 1;
+  letter-spacing: .03em;
+  text-transform: uppercase;
+  transition: background .25s;
+}
+#bf26 .bf26-top__widget a:is(.recommended-accessory-marketing-button, ._recommended-accessory-marketing-button):hover { background: var(--bf-orange) !important; }
+/* Shown when the widget hasn't rendered (local preview) */
+.bf26-top.is-empty .bf26-top__featured,
+.bf26-top.is-empty .bf26-top__arrow,
+.bf26-top.is-empty .bf26-top__progress { display: none; }
+.bf26-top__empty {
+  padding: 40px 16px;
+  border: 2px dashed #d4d4d4;
+  border-radius: 10px;
+  text-align: center;
+  color: var(--bf-mid-grey);
+}
+
+#bf26 .bf26-top__widget :is(._sale-tag_01, .pb_clearance_tag) {
+  position: absolute;
+  top: 0;
+  left: 6px;
+  width: 22px;
+  height: 45px;
+  margin: 0;
+  background-size: contain;
+  background-repeat: no-repeat;
+  pointer-events: none;
+}
+
+/* Prices (labelled by main.js): Was / Sale, or From when there's no strikethrough.
+   The widget sets font-size inline with !important on the <p>, so sizes go on the spans */
+/* Price area is two lines tall; prices sit on its bottom line so "Sale" and "From" line up across cards */
+#bf26 .bf26-top__widget :is(.recommended-accessory-marketing-price, ._recommended-accessory-marketing-price) {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  height: 46px;
+  overflow: hidden;
+}
+#bf26 .bf26-top__widget :is(.recommended-accessory-marketing-price, ._recommended-accessory-marketing-price) br { display: none; }
+#bf26 .bf26-top__widget :is(.recommended-accessory-marketing-price, ._recommended-accessory-marketing-price),
+.bf26-feature__price {
+  margin: 4px 0 0 !important;
+  padding: 0 4px;
+  font-family: var(--bf-font-display);
+  font-weight: 500;
+  line-height: 1.05;
+  letter-spacing: .02em;
+}
+.bf26-price__was {
+  display: block;
+  font-size: 16px;
+  color: var(--bf-mid-grey);
+}
+.bf26-price__sale { font-size: 22px; color: var(--bf-orange); }
+.bf26-price__from { font-size: 16px; color: var(--bf-black); }
+.bf26-feature__price { margin-top: 8px !important; padding: 0; }
+.bf26-feature__price .bf26-price__was { font-size: 20px; }
+.bf26-feature__price .bf26-price__sale { font-size: 32px; }
+.bf26-feature__price .bf26-price__from { font-size: 20px; }
+
+.bf26-top__arrow {
+  position: absolute;
+  top: 70px;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  padding: 0 0 3px;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(70, 70, 71, .85);
+  color: var(--bf-white);
+  font-size: 24px;
+  line-height: 1;
+  cursor: pointer;
+  transition: opacity .3s, transform .25s var(--bf-ease), background .2s;
+}
+.bf26-top__arrow:hover { background: var(--bf-orange); transform: scale(1.1); }
+.bf26-top__arrow--prev { left: -12px; }
+.bf26-top__arrow--next { right: -12px; }
+.bf26-top__arrow:disabled { opacity: 0; pointer-events: none; }
+
+.bf26-top__progress {
+  position: relative;
+  height: 3px;
+  margin-top: 16px;
+  background: #ececec;
+}
+.bf26-top__progress span {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  background: #7d7d7d;
+  transition: left .2s linear, width .2s linear;
+}
+
+.bf26-top__all {
+  display: block;
+  width: max-content;
+  margin: 10px 0 0 auto;
+  font-size: 13px;
+  transition: color .2s;
+}
+.bf26-top__all span { display: inline-block; margin-left: 4px; transition: transform .25s var(--bf-ease); }
+.bf26-top__all:hover { color: var(--bf-orange); }
+.bf26-top__all:hover span { transform: translateX(4px); }
+
+/* --- Daily Brand Deals (brand discount grid) -------------------------------- */
+
+/* Rows of up to 4 cards; a short last row stays centered */
+.bf26-bsales {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 24px;
+  max-width: 952px;
+  margin: 0 auto;
+}
+#bf26#bf26 #bf26-brands-title { margin-bottom: 32px; } /* three IDs: outranks the #bf26#bf26 h2 reset */
+#bf26#bf26 .bf26-bsales { margin: 0 auto; } /* beats the ul reset above */
+
+/* Card: logo on light grey, discount on the dark bar */
+.bf26-bsale a {
+  display: flex;
+  flex-direction: column;
+  width: 220px;
+  height: 220px;
+  overflow: hidden;
+  border-radius: 20px;
+  background: var(--bf-card);
+  transition: transform .35s var(--bf-ease), box-shadow .35s var(--bf-ease);
+}
+.bf26-bsale a:hover { transform: translateY(-6px); box-shadow: 0 14px 28px rgba(0, 0, 0, .12); }
+.bf26-bsale__logo {
+  flex: 1;
+  display: grid;
+  place-items: center;
+  padding: 20px 30px;
+}
+.bf26-bsale__logo img {
+  width: 100%;
+  height: 84px;
+  object-fit: contain;
+  mix-blend-mode: multiply; /* white logo backgrounds disappear into the card */
+}
+.bf26-bsale__off {
+  position: relative;
+  display: grid;
+  place-items: center;
+  height: 74px;
+  overflow: hidden;
+  background: var(--bf-dark-grey);
+  font-family: var(--bf-font-display);
+  font-weight: 500;
+  font-size: 42px;
+  line-height: 1;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--bf-white);
+}
+.bf26-bsale__off.is-long { font-size: 32px; }
+.bf26-bsale__off.is-longer { font-size: 24px; }
+.bf26-bsale__off span { position: relative; }
+/* Orange wipe on hover, like the doorbuster button */
+.bf26-bsale__off::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--bf-orange);
+  transform: translateX(-101%);
+  transition: transform .4s var(--bf-ease);
+}
+.bf26-bsale a:hover .bf26-bsale__off::before { transform: none; }
+
+/* --- Sales by Categories (dark band) ---------------------------------------- */
+
+.bf26-categories {
+  position: relative;
+  margin-top: 16px;
+  padding: 45px 16px 34px;
+  background: var(--bf-dark-grey);
+  isolation: isolate;
+}
+.bf26-categories__mark {
+  position: absolute;
+  left: 50%;
+  top: -220px;
+  z-index: -1;
+  width: 1028px;
+  max-width: none !important;
+  height: auto;
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+.bf26-categories__links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  column-gap: 36px;
+  margin-top: 28px !important;
+}
+.bf26-categories__links a {
+  position: relative;
+  display: inline-block;
+  font-family: var(--bf-font-body);
+  font-size: 22px;
+  line-height: 2.4;
+  color: var(--bf-white);
+  transition: transform .25s var(--bf-ease);
+}
+/* On hover an orange underline grows in from the left */
+.bf26-categories__links a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 11px;
+  width: 100%;
+  height: 3px;
+  background: #e04f26; /* Performance Orange */
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform .45s var(--bf-ease);
+}
+.bf26-categories__links a:hover { transform: translateY(-2px); }
+.bf26-categories__links a:hover::after { transform: scaleX(1); }
+
+/* --- Preview badge (only with ?preview=) ------------------------------------ */
+
+.bf26-preview {
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  z-index: 50;
+  padding: 10px 14px;
+  border-radius: 6px;
+  background: #222;
+  color: var(--bf-white);
+  font: 13px/1.4 system-ui, sans-serif;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, .25);
+}
+.bf26-preview b { color: #ff8a50; }
+
+/* --- Responsive ------------------------------------------------------------- */
+
+@media (max-width: 900px) {
+  /* Stacked: title on top, then the large product, then the list */
+  .bf26-top { flex-direction: column; }
+  .bf26-top__main { display: contents; }
+  .bf26-top__title { order: -1; margin-bottom: 16px !important; text-align: center; }
+  .bf26-top__featured {
+    flex-basis: auto;
+    align-items: center;
+    border-radius: 20px 20px 0 0;
+    text-align: center;
+  }
+  .bf26-feature { align-items: center; }
+  .bf26-feature__actions { margin-top: 24px; justify-content: center; }
+  .bf26-top__carousel { margin: 24px 16px 0; }
+  .bf26-top__progress { margin: 16px 16px 0; }
+  .bf26-top__all { margin: 10px 16px 0 auto; }
+}
+
+@media (max-width: 640px) {
+  #bf26 .bf26-title { font-size: 44px; }
+  #bf26 .bf26-title--xl { font-size: 54px; }
+  /* Hero: taller frame, photo fills it, logo + line centered */
+  .bf26-hero { --hero-ratio: .62; border-radius: 12px; }
+  .bf26-hero__photo {
+    left: 0;
+    top: 0;
+    width: 100cqw;
+    height: 62cqw;
+    background-position: 62% center;
+  }
+  .bf26-hero__shape { width: 70cqw; }
+  .bf26-hero__shape--left  { left: -30cqw; top: -34cqw; }
+  .bf26-hero__shape--right { left: 58cqw; top: 26cqw; }
+  .bf26-hero__logo { left: 19cqw; top: 6cqw; width: 62cqw; }
+  /* Same alignment, scaled with the logo (62cqw wide = 1.742x desktop) */
+  .bf26-hero__pre { left: 23.25cqw; top: 16.73cqw; font-size: 11.24cqw; }
+  .bf26-hero__tag { right: 29.43cqw; top: 34.19cqw; font-size: 6.24cqw; }
+
+  .bf26-countdown { font-size: 14px; }
+  .bf26-countdown b { font-size: 21px; }
+  /* Doorbusters: today's deal large on top, then a two-column grid (next deal, then past deals) */
+  .bf26-db__scroller {
+    display: grid;
+    grid-template-columns: repeat(2, 130px);
+    justify-content: center;
+    column-gap: 24px;
+    row-gap: 54px;
+    padding: 96px 0 8px !important;
+    overflow: visible;
+  }
+  .bf26-db__scroller::before,
+  .bf26-db__scroller::after { display: none; }
+  .bf26-deal { zoom: .55; }
+  .bf26-deal.is-lead {
+    grid-column: 1 / -1;
+    order: -1;
+    justify-self: center;
+    zoom: 1.27;
+  }
+  .bf26-discounts { gap: 16px; }
+  #bf26#bf26 #bf26-signup-title { font-size: 30px; }
+  .bf26-signup { padding: 14px 16px 16px; }
+  .bf26-signup .section:first-of-type { grid-template-columns: 1fr 1fr; gap: 10px; }
+  .bf26-signup .forminput:nth-child(3) { grid-column: 1 / -1; } /* email full width */
+  /* Opt-in, captcha and a full-width button stacked and centered */
+  .bf26-signup .section + .section { justify-content: center; gap: 8px 10px; }
+  .bf26-signup__optin,
+  .bf26-signup .bf26-recaptcha { margin-right: 0; }
+  .bf26-signup [type=submit] { width: 100%; }
+  .bf26-discount { width: 104px; height: 104px; font-size: 40px; }
+  .bf26-discount--sm { font-size: 34px; }
+  /* Two columns */
+  .bf26-bsales { gap: 14px; }
+  .bf26-bsale a { width: 160px; height: 160px; border-radius: 16px; }
+  .bf26-bsale__logo { padding: 14px 18px; }
+  .bf26-bsale__logo img { height: 60px; }
+  .bf26-bsale__off { height: 54px; font-size: 30px; }
+  .bf26-bsale__off.is-long { font-size: 23px; }
+  .bf26-bsale__off.is-longer { font-size: 17px; }
+  /* Categories: two even columns */
+  .bf26-categories__links {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 160px));
+    justify-content: center;
+    justify-items: center;
+    column-gap: 16px;
+  }
+  .bf26-categories__links a { font-size: 19px; line-height: 2.2; }
+}
+
+@media (max-width: 370px) {
+  .bf26-deal.is-lead { zoom: 1.12; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bf26 *, .bf26 *::before, .bf26 *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .bf26 [data-reveal] { opacity: 1; transform: none; }
+}
+
+/* --- Site integration --------------------------------------------------------
+   Full-width layout inside the performancebike.com content page */
+.bf26-discount { color: #fff !important; }
+.bf26-cart { color: #fff !important; }
+.bf26-cart:hover { color: #fff !important; }
+.bf26 { width: 100vw; max-width: none; } /* full width; each section centers its own content */
+#maincontent > div { width: 100vw !important; }
+.page-block {padding: 0 !important; }
+#search-bottom{margin: 12px auto 0; max-width: 1000px;}
+.page-block related {margin: 12px auto 0; max-width: 1000px;}
+@media (min-width: 767px) { #searchpage .flex-wrapper {  margin: 12px auto 0 !important; max-width: 1000px !important; } }
+._recommended-accessory-marketing { max-height: 284px !important; }
