@@ -1394,3 +1394,4 @@ a:hover, span.link:hover { color: revert-rule; }
 .breadcrumb {display: none !important}
 @media (min-width: 767px) { #searchpage .flex-wrapper {  margin: 12px auto 0 !important; max-width: 1000px !important; } }
 ._recommended-accessory-marketing { max-height: 284px !important; justify-content: end !important; }
+@media (max-width: 767px) { #searchpage { padding: 0 !important; } }
