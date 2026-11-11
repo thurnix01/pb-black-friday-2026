@@ -144,6 +144,8 @@ a:hover, span.link:hover { color: revert-rule; }
   border-radius: 20px;
   background: var(--bf-hero-bg);
   overflow: hidden;
+  /* Safari drops overflow's rounded corners around animated / blended layers; clip-path keeps them */
+  clip-path: inset(0 round 20px);
   isolation: isolate;
 }
 
@@ -1020,16 +1022,29 @@ a:hover, span.link:hover { color: revert-rule; }
   place-items: center;
   width: 30px;
   height: 30px;
-  padding: 3px 0;
+  padding: 0;
   border: 0;
   border-radius: 50%;
   background: rgba(70, 70, 71, .85);
   color: var(--bf-white);
-  font-size: 24px;
+  font-size: 0; /* the ‹ › characters sit off-center in the site's fonts; the chevron is drawn below */
   line-height: 1;
   cursor: pointer;
   transition: opacity .3s, transform .25s var(--bf-ease), background .2s;
 }
+/* Two sides of a rotated square; the shift moves the chevron's middle (not the square's) onto the center */
+.bf26-top__arrow::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 8px;
+  height: 8px;
+  border: solid var(--bf-white);
+  border-width: 2px 2px 0 0;
+}
+.bf26-top__arrow--next::before { transform: translateX(-2px) rotate(45deg); }
+.bf26-top__arrow--prev::before { transform: translateX(2px) rotate(-135deg); }
 .bf26-top__arrow:hover { background: var(--bf-orange); transform: scale(1.1); }
 .bf26-top__arrow--prev { left: -12px; }
 .bf26-top__arrow--next { right: -12px; }
@@ -1221,7 +1236,7 @@ a:hover, span.link:hover { color: revert-rule; }
   #bf26 .bf26-title { font-size: 44px; }
   #bf26 .bf26-title--xl { font-size: 54px; }
   /* Hero: taller frame, photo fills it, logo + line centered */
-  .bf26-hero { --hero-ratio: .62; border-radius: 12px; }
+  .bf26-hero { --hero-ratio: .62; border-radius: 12px; clip-path: inset(0 round 12px); }
   .bf26-hero__photo {
     left: 0;
     top: 0;
@@ -1242,16 +1257,16 @@ a:hover, span.link:hover { color: revert-rule; }
   /* Doorbusters: today's deal large on top, then a two-column grid (next deal, then past deals) */
   .bf26-db__scroller {
     display: grid;
-    grid-template-columns: repeat(2, 130px);
+    grid-template-columns: repeat(2, 165px); /* 236px cards at zoom .7 */
     justify-content: center;
-    column-gap: 24px;
-    row-gap: 54px;
+    column-gap: 14px;
+    row-gap: 66px; /* room for the zoomed pop-out images */
     padding: 96px 0 8px !important;
     overflow: visible;
   }
   .bf26-db__scroller::before,
   .bf26-db__scroller::after { display: none; }
-  .bf26-deal { zoom: .55; }
+  .bf26-deal { zoom: .7; }
   .bf26-deal.is-lead {
     grid-column: 1 / -1;
     order: -1;
@@ -1291,9 +1306,12 @@ a:hover, span.link:hover { color: revert-rule; }
 
 @media (max-width: 370px) {
   .bf26-deal.is-lead { zoom: 1.12; }
+  /* 288px of room: two 134px cards */
+  .bf26-db__scroller { grid-template-columns: repeat(2, 134px); column-gap: 12px; }
+  .bf26-deal { zoom: .57; }
 }
 
-@media (prefers-reduced-motion: reduce) {hind h
+@media (prefers-reduced-motion: reduce) {
   .bf26 *, .bf26 *::before, .bf26 *::after {
     animation-duration: .01ms !important;
     animation-iteration-count: 1 !important;
