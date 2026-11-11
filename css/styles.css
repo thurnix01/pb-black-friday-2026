@@ -504,7 +504,7 @@ a:hover, span.link:hover { color: revert-rule; }
 .bf26-deal.is-placeholder .bf26-deal__card {
   display: grid;
   place-items: center;
-  padding-bottom: 40px; /* text sits a little above the middle, like the mockup */
+  padding-bottom: 0px; /* text sits a little above the middle, like the mockup */
 }
 .bf26-deal.is-placeholder .bf26-deal__card::before {
   content: "";
