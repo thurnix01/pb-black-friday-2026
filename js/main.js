@@ -598,7 +598,7 @@
           // The site answers with its "Thanks for signing up" page
           if (!res.ok || !/thanks for signing up/i.test(html)) throw new Error('signup ' + res.status);
           form.reset();
-          showSignupMessage('Deals are on the way!');
+          showSignupMessage('Best deals are coming your way!');
         });
       }).catch(function (err) {
         console.error('[bf26] signup failed:', err);
