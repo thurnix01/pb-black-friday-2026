@@ -500,6 +500,30 @@ a:hover, span.link:hover { color: revert-rule; }
   color: var(--bf-mid-grey);
 }
 
+/* "More Deals / Coming Soon" fillers for deals not announced yet: dashed outline, no bar */
+.bf26-deal.is-placeholder .bf26-deal__card {
+  display: grid;
+  place-items: center;
+  padding-bottom: 40px; /* text sits a little above the middle, like the mockup */
+}
+.bf26-deal.is-placeholder .bf26-deal__card::before {
+  content: "";
+  position: absolute;
+  inset: 13px;
+  border: 2px dashed #c9c9c9;
+  border-radius: 10px;
+}
+.bf26-deal__soon-more {
+  font-family: var(--bf-font-display);
+  font-weight: 500;
+  font-size: 46px;
+  line-height: .95;
+  letter-spacing: .01em;
+  text-align: center;
+  color: #8f8f8f;
+}
+.bf26-deal__soon-more span { display: block; font-size: 30px; }
+
 /* Dark bar along the bottom of each card */
 .bf26-deal__bar {
   position: absolute;
