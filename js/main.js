@@ -409,8 +409,10 @@
     }, TICK_MS);
 
     var widget = featured.parentNode;
-    widget.addEventListener('mouseenter', function () { paused = true; });
-    widget.addEventListener('mouseleave', function () { paused = false; });
+    // Mouse hover only: a tap on a phone fires mouseenter but no mouseleave until you tap elsewhere,
+    // which left the rotation paused for good
+    widget.addEventListener('pointerenter', function (e) { if (e.pointerType === 'mouse') paused = true; });
+    widget.addEventListener('pointerleave', function (e) { if (e.pointerType === 'mouse') paused = false; });
 
     // Pause / play the rotation (the panel is re-rendered each step, so listen on the panel)
     featured.addEventListener('click', function (e) {
