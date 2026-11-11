@@ -551,6 +551,7 @@
     if (!form) return;
     var button = form.querySelector('[type=submit]');
     var captcha = form.querySelector('.bf26-recaptcha');
+    var captchaId = null;
 
     window.BF26_solveCaptcha = function (response) {
       form.querySelector('[name=RecaptchaResponse]').value = response;
@@ -558,7 +559,11 @@
     };
     window.BF26_renderCaptcha = function () {
       if (captcha && !captcha.hasChildNodes() && window.grecaptcha && grecaptcha.render) {
-        grecaptcha.render(captcha, { sitekey: captcha.getAttribute('data-sitekey'), callback: 'BF26_solveCaptcha' });
+        captchaId = grecaptcha.render(captcha, {
+          sitekey: captcha.getAttribute('data-sitekey'),
+          callback: 'BF26_solveCaptcha',
+          'expired-callback': function () { button.classList.add('css-button-disabled'); }
+        });
       }
     };
     if (window.grecaptcha && grecaptcha.render) {
@@ -573,10 +578,57 @@
     var $ = window.jQuery;
     if ($ && $.validator && $.validator.unobtrusive) $.validator.unobtrusive.parse($(form));
 
+    // Sent in the background so the shopper stays on this page; a message confirms it instead of the
+    // /newsletter-signup page. If the request can't be made at all, the form submits the normal way.
+    var sending = false;
     form.addEventListener('submit', function (e) {
-      if (button.classList.contains('css-button-disabled')) { e.preventDefault(); return; } // captcha not done yet
+      if (button.classList.contains('css-button-disabled') || sending) { e.preventDefault(); return; } // captcha not done yet
+      if ($ && $.fn && $.fn.valid && !$(form).valid()) return; // site validation shows the messages and stops the submit
+      if (!window.fetch) return;
+      e.preventDefault();
       if (window.trackEvent) window.trackEvent('bf26-doorbuster-signup-submit', 'submit-form');
+      sending = true;
+      button.classList.add('css-button-disabled');
+      fetch(form.action, {
+        method: 'POST',
+        body: new URLSearchParams(new FormData(form)),
+        credentials: 'same-origin'
+      }).then(function (res) {
+        return res.text().then(function (html) {
+          // The site answers with its "Thanks for signing up" page
+          if (!res.ok || !/thanks for signing up/i.test(html)) throw new Error('signup ' + res.status);
+          form.reset();
+          showSignupMessage('Deals are on the way!');
+        });
+      }).catch(function (err) {
+        console.error('[bf26] signup failed:', err);
+        showSignupMessage('Something went wrong. Please try again.', true);
+      }).then(function () {
+        sending = false;
+        form.querySelector('[name=RecaptchaResponse]').value = '';
+        if (captchaId !== null && window.grecaptcha) grecaptcha.reset(captchaId); // each captcha answer works once
+      });
     });
+  }
+
+  // Message over the page that closes itself after 4 seconds (or on click / Escape)
+  function showSignupMessage(text, isError) {
+    var old = document.querySelector('.bf26-toast');
+    if (old) old.remove();
+    var toast = document.createElement('div');
+    toast.className = 'bf26-toast' + (isError ? ' is-error' : '');
+    toast.setAttribute('role', 'status');
+    toast.innerHTML = '<p class="bf26-toast__box">' + escapeHtml(text) + '</p>';
+    document.getElementById('bf26').appendChild(toast);
+    function close() {
+      document.removeEventListener('keydown', onKey);
+      toast.classList.add('is-closing');
+      setTimeout(function () { toast.remove(); }, 300);
+    }
+    function onKey(e) { if (e.key === 'Escape') close(); }
+    toast.addEventListener('click', close);
+    document.addEventListener('keydown', onKey);
+    setTimeout(close, 4000);
   }
 
   /* --- Scroll reveal ------------------------------------------------------- */
