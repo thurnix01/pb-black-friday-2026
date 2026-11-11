@@ -862,7 +862,7 @@ a:hover, span.link:hover { color: revert-rule; }
   box-shadow: 0 3px 6px rgba(0, 0, 0, .18);
   cursor: pointer;
   transition: background .25s, transform .2s var(--bf-ease);
-  display: none;
+
 }
 .bf26-pause:hover { background: var(--bf-orange); }
 .bf26-pause:active { transform: scale(.94); }
