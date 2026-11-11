@@ -926,7 +926,7 @@ a:hover, span.link:hover { color: revert-rule; }
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
-  height: 64px; /* always 3 lines tall */
+  height: auto; /* always 3 lines tall */
   margin-top: 8px !important;
   padding: 0 4px;
   font-family: var(--bf-font-body);
