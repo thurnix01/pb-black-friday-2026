@@ -655,6 +655,43 @@
     items.forEach(function (el) { io.observe(el); });
   }
 
+  /* --- Jump links into the results (#scroll-to-results) -------------------- */
+
+  // This page sits above the site's search results, and the brand / category links come back to it with
+  // #scroll-to-results. The browser jumps there straight away, but this page then grows (cards built, images
+  // and fonts loaded) and pushes the results down, so the jump lands short. Re-align while the page settles,
+  // and stop as soon as the shopper scrolls on their own.
+  function initAnchorFix() {
+    var id = decodeURIComponent(window.location.hash.slice(1));
+    var page = document.getElementById('bf26');
+    if (!id || !page || !window.ResizeObserver) return;
+    var done = false;
+    function stop() { done = true; if (observer) observer.disconnect(); }
+    ['wheel', 'touchstart', 'keydown', 'mousedown'].forEach(function (type) {
+      window.addEventListener(type, stop, { once: true, passive: true });
+    });
+    function align() {
+      if (done) return;
+      var target = document.getElementById(id);
+      // Only targets below this page; links within the page itself are left alone
+      if (!target || !(page.compareDocumentPosition(target) & Node.DOCUMENT_POSITION_FOLLOWING)) return;
+      var top = target.getBoundingClientRect().top + window.pageYOffset - (parseFloat(getComputedStyle(target).scrollMarginTop) || 0);
+      if (Math.abs(window.pageYOffset - top) > 2) window.scrollTo({ top: top, behavior: 'instant' });
+    }
+    var observer = new ResizeObserver(align);
+    observer.observe(document.body);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(align);
+    if (document.readyState === 'complete') {
+      setTimeout(stop, 4000);
+    } else {
+      window.addEventListener('load', function () {
+        align();
+        setTimeout(stop, 4000); // late changes after this are left alone
+      });
+    }
+    align();
+  }
+
   /* --- Preview badge ------------------------------------------------------- */
 
   function showPreviewBadge(value) {
@@ -677,6 +714,7 @@
   safely(initBrandSales);
   safely(initSignup);
   safely(initReveal);
+  safely(initAnchorFix);
 
   setInterval(function () {
     var t = now();
