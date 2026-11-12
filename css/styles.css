@@ -601,7 +601,7 @@ a:hover, span.link:hover { color: revert-rule; }
 
 /* --- Doorbuster sign-up (site newsletter form, restyled) --------------------- */
 
-.bf26-signup-section { margin-top: 72px; }
+.bf26-signup-section { margin-top: 72px; margin-bottom: 72px; }
 #bf26#bf26 #bf26-signup-title { margin-bottom: 16px; font-size: 40px; text-transform: none; letter-spacing: 0; }
 
 .bf26-signup {
