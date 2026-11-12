@@ -34,6 +34,7 @@ window.BF26_BRANDS = {
   'Terry': { logo: 'assets/brands/terry.svg', id: 1561 },
   'Delta': { logo: 'assets/brands/delta.svg', id: 1074 }, // traced from Delta's site logo (no vector available)
   'WTB': { logo: 'assets/brands/wtb.svg', id: 1653 },
+  'Almsthre': { logo: 'assets/brands/almsthre.svg', id: 4284 }, // traced from Almsthre's site logo (no vector available)
   'Continental Tire': { as: 'Continental' },
   'Shimano FTW': { as: 'Shimano', note: 'shoes' },
   'Shimano HG': { as: 'Shimano', note: 'pedals & wheels' }
@@ -54,8 +55,8 @@ window.BF26_BRAND_DAYS = {
   '2026-11-08': ['Silca (Deals)', 'Fizik (20-25% off)', 'Crankbrothers (20-25% off)', 'Brooks (20-25% off)', 'Met Helmets (Deals)', 'Selle Royal (20-25% off)'],
   '2026-11-09': ['Silca (Deals)', 'Fizik (20-25% off)', 'Crankbrothers (20-25% off)', 'Brooks (20-25% off)', 'Met Helmets (Deals)', 'Selle Royal (20-25% off)'],
   '2026-11-10': ['Fizik (20-25% off)', 'Crankbrothers (20-25% off)', 'Brooks (20-25% off)', 'Met Helmets (Deals)', 'Selle Royal (20-25% off)', 'Pirelli (20% off)'],
-  '2026-11-11': ['Garmin (10-30% off)', 'Fizik (20-25% off)', 'Crankbrothers (20-25% off)', 'Brooks (20-25% off)', 'Met Helmets (Deals)', 'Selle Royal (20-25% off)'],
-  '2026-11-12': ['Garmin (10-30% off)', 'Fizik (20-25% off)', 'Crankbrothers (20-25% off)', 'Brooks (20-25% off)', 'Met Helmets (Deals)', 'Selle Royal (20-25% off)'],
+  '2026-11-11': ['Fizik (20-25% off)', 'Crankbrothers (20-25% off)', 'Brooks (20-25% off)', 'Met Helmets (Deals)', 'Selle Royal (20-25% off)', 'Pirelli (20% off)'],
+  '2026-11-12': ['Fizik (20-25% off)', 'Crankbrothers (20-25% off)', 'Brooks (20-25% off)', 'Met Helmets (Deals)', 'Selle Royal (20-25% off)', 'Almsthre (25% off)'],
   '2026-11-13': ['Pearl Izumi (25-30% off)', 'Garmin (10-30% off)', 'Fizik (20-25% off)', 'Crankbrothers (20-25% off)', 'Brooks (20-25% off)', 'Met Helmets (Deals)'],
   '2026-11-14': ['Pearl Izumi (25-30% off)', 'Garmin (10-30% off)', 'Fizik (20-25% off)', 'Crankbrothers (20-25% off)', 'Brooks (20-25% off)', 'Met Helmets (Deals)'],
   '2026-11-15': ['Pearl Izumi (25-30% off)', 'Garmin (10-30% off)', 'Fizik (20-25% off)', 'Crankbrothers (20-25% off)', 'Brooks (20-25% off)', 'Met Helmets (Deals)'],
