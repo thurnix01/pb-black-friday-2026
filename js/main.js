@@ -486,7 +486,7 @@
 
   /* --- Daily Brand Deals --------------------------------------------------- */
 
-  var BRAND_LINK = 'https://www.performancebike.com/black-friday/c16804?fb={id}&lg=fb#category-heading';
+  var BRAND_LINK = 'https://www.performancebike.com/black-friday/c16804?fb={id}&lg=fb#scroll-to-results';
 
   // Today's date in Pacific time as YYYY-MM-DD (the sheet's days switch at midnight Pacific)
   function saleDay(t) {
