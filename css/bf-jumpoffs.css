@@ -165,3 +165,9 @@
 html.bf26-quiet-load body.ajax-request-pending:not(#checkoutPages) { cursor: auto !important; }
 html.bf26-quiet-load body.ajax-request-pending > * { opacity: 1 !important; }
 html.bf26-quiet-load body.ajax-request-pending #page-loading { display: none !important; }
+
+/* --- Top Deals copied in from a hidden page (brand pages, initTopDeals in main.js) --------
+   The widget's own CSS lays the list out in a row; repeat that part in case its styles
+   sit outside the copied block. */
+
+#bf26 .bf26-top__widget .scroll-container { display: flex; overflow-x: auto; overflow-y: hidden; }
