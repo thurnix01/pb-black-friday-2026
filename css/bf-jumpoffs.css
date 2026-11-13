@@ -1,0 +1,160 @@
+/* ==========================================================================
+   Black Friday 2026 category jump-off pages (Figma: Master-Promotion / bf_category_jumpoffs)
+   Loaded after styles.css and bf-cat-styles.css. Every section reuses the main page's
+   components; this file only adds the brand version of the hero and the Pre-Black Friday banner.
+   ========================================================================== */
+
+/* --- Hero: brand version ------------------------------------------------------
+   Same banner, photo and shapes as the main hero. The logo + "PRE" sit at 0.769x the
+   main hero's size (same bf-logo.svg), with a divider and "Save up to 70%" + brand logo
+   on the right instead of the tagline. */
+
+.bf26-hero--brand .bf26-hero__logo { left: 9.8cqw; top: 7.85cqw; width: 27.37cqw; }
+.bf26-hero--brand .bf26-hero__pre { left: 11.68cqw; top: 12.59cqw; font-size: 4.96cqw; }
+
+.bf26-hero__divider {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 1px;
+  height: 14cqw;
+  background: var(--bf-white);
+  transform: translate(-50%, -50%);
+  animation: bf26-divider-in .8s var(--bf-ease) both .6s;
+}
+.bf26-hero__save,
+.bf26-hero__brand {
+  position: absolute;
+  left: 75.51cqw;
+  animation: bf26-brand-in .8s var(--bf-ease) both .8s;
+}
+.bf26-hero__save {
+  top: 11.61cqw;
+  font-family: var(--bf-font-display);
+  font-weight: 500;
+  font-size: 5.6cqw;
+  line-height: .72; /* capitals start .02em below the top, like .bf26-hero__tag */
+  letter-spacing: .02em;
+  color: var(--bf-white);
+  text-transform: uppercase;
+  white-space: nowrap;
+  transform: translateX(-50%) skewX(-10deg);
+}
+.bf26-hero__brand {
+  top: 16.96cqw;
+  width: 14cqw;
+  height: auto;
+  max-width: none !important;
+  transform: translateX(-50%);
+}
+
+/* Wider, shorter logos, centred on the same spot as the Specialized logo */
+.bf26-hero__brand--sram    { top: 17.96cqw; width: 15cqw; }
+.bf26-hero__brand--shimano { top: 17.85cqw; width: 17cqw; }
+
+/* Category pages: the category name in place of the brand logo */
+.bf26-hero__cat {
+  position: absolute;
+  left: 75.51cqw;
+  top: 17.4cqw;
+  font-family: var(--bf-font-display);
+  font-weight: 500;
+  font-size: 4.6cqw;
+  line-height: .72;
+  letter-spacing: .02em;
+  color: var(--bf-white);
+  text-transform: uppercase;
+  white-space: nowrap;
+  transform: translateX(-50%) skewX(-10deg);
+  animation: bf26-brand-in .8s var(--bf-ease) both .8s;
+}
+
+@keyframes bf26-divider-in { from { opacity: 0; transform: translate(-50%, -50%) scaleY(0); } }
+@keyframes bf26-brand-in { from { opacity: 0; translate: 0 10px; } }
+
+/* --- Pre-Black Friday banner -------------------------------------------------- */
+
+.bf26-promo {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  max-width: 840px;
+  margin: 0 auto;
+  padding: 22px 40px 26px;
+  overflow: hidden;
+  background: radial-gradient(ellipse 52% 124% at 90% 34%, rgba(44, 0, 0, .81), rgba(28, 5, 5, .9) 50%, #0c0b0b 100%);
+  isolation: isolate;
+}
+/* Photo (faint, in greyscale) and the Black Friday arrow behind the copy */
+.bf26-promo::before,
+.bf26-promo::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  pointer-events: none;
+}
+.bf26-promo::before {
+  inset: 0;
+  background: url("../assets/jumpoffs/promo-photo.jpg") center bottom / cover no-repeat;
+  mix-blend-mode: luminosity;
+  opacity: .0625;
+}
+.bf26-promo::after {
+  left: -10.13%;
+  top: -85.32%;
+  width: 75.52%;
+  height: 286.09%;
+  background: url("../assets/jumpoffs/promo-shape.png") center / 100% 100% no-repeat;
+}
+#bf26 .bf26-promo__eyebrow,
+#bf26#bf26 .bf26-promo__title {
+  margin: 0;
+  font-family: var(--bf-font-display);
+  font-weight: 500;
+  letter-spacing: .02em;
+  text-transform: uppercase;
+}
+/* Figma sizes x1.48, in step with the 40px button (Figma: 27px) */
+#bf26 .bf26-promo__eyebrow { font-size: 28px; line-height: 1.2; color: #e04f26; }
+#bf26#bf26 .bf26-promo__title { font-size: 38px; line-height: .9; color: var(--bf-white); }
+#bf26 .bf26-promo__copy { font-size: 20px; line-height: 1.35; color: var(--bf-white); }
+.bf26-promo__btn {
+  display: grid;
+  place-items: center;
+  width: 226px;
+  height: 40px;
+  padding-top: 6px;
+  border-radius: 4px;
+  background: #e04f26;
+  font-family: var(--bf-font-body);
+  font-size: 1em;
+  -webkit-text-stroke: .25px currentColor; /* a touch heavier: the site only hosts the regular cut */
+  text-transform: uppercase;
+  color: var(--bf-white) !important;
+  transition: background .25s, transform .25s var(--bf-ease);
+}
+.bf26-promo__btn:hover { background: var(--bf-orange); transform: translateY(-2px); }
+
+/* --- Phones: the hero stacks (Figma: hero-banner-mobile, 500 x 205) -------------- */
+
+@media (max-width: 640px) {
+  .bf26-hero--brand { --hero-ratio: .41; }
+  .bf26-hero--brand .bf26-hero__photo { height: 41cqw; }
+  .bf26-hero--brand .bf26-hero__shape { width: 84.4cqw; }
+  .bf26-hero--brand .bf26-hero__shape--left  { left: -74.4cqw; top: -57.8cqw; }
+  .bf26-hero--brand .bf26-hero__shape--right { left: 89.2cqw; top: -11.4cqw; }
+  .bf26-hero--brand .bf26-hero__logo { left: 37.22cqw; top: 5.4cqw; width: 26.75cqw; }
+  .bf26-hero--brand .bf26-hero__pre { left: 39.05cqw; top: 10.03cqw; font-size: 4.81cqw; } /* on the B's left edge, as on desktop */
+  .bf26-hero--brand .bf26-hero__divider { left: 51.44cqw; top: 27.4cqw; height: 7.04cqw; }
+  .bf26-hero--brand .bf26-hero__save { left: 25.42cqw; top: 24.41cqw; font-size: 8.09cqw; }
+  .bf26-hero--brand .bf26-hero__brand { left: 76.01cqw; top: 22.4cqw; width: 35.1cqw; }
+  .bf26-hero--brand .bf26-hero__brand--sram    { top: 25.15cqw; width: 34cqw; }
+  .bf26-hero--brand .bf26-hero__brand--shimano { top: 24.9cqw; width: 38cqw; }
+  .bf26-hero--brand .bf26-hero__cat { left: 76.01cqw; top: 24.41cqw; font-size: 8.09cqw; }
+  .bf26-promo { padding: 18px 20px 20px; }
+  #bf26 .bf26-promo__eyebrow { font-size: 22px; }
+  #bf26#bf26 .bf26-promo__title { font-size: 30px; }
+  #bf26 .bf26-promo__copy { font-size: 16px; }
+}
