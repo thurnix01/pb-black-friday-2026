@@ -307,8 +307,35 @@
 
   var ROTATE_MS = 6000;
 
-  // The product list is the Bloomreach widget; the large panel cycles through its items
+  // Brand pages don't render {{WidgetTemplate}} tokens, so there the widget sits on a hidden content page
+  // (token wrapped in <div id="bf26-widget">) named in data-widget-src, and is copied in from it.
   function initTopDeals() {
+    var widgetSlot = document.querySelector('[data-top-widget]');
+    var src = widgetSlot && widgetSlot.getAttribute('data-widget-src');
+    if (!src || widgetSlot.querySelector('.scroll-container')) return setupTopDeals();
+    var section = widgetSlot.closest('section');
+    fetch(src, { credentials: 'same-origin' }).then(function (res) {
+      if (!res.ok) throw new Error('widget page ' + res.status);
+      return res.text();
+    }).then(function (html) {
+      var block = new DOMParser().parseFromString(html, 'text/html').getElementById('bf26-widget');
+      if (!block || !block.querySelector('.scroll-item')) throw new Error('no widget items on ' + src);
+      widgetSlot.innerHTML = block.innerHTML;
+      // Scripts added through innerHTML don't run; re-add the widget's own so they do
+      Array.prototype.forEach.call(widgetSlot.querySelectorAll('script'), function (old) {
+        var s = document.createElement('script');
+        if (old.src) s.src = old.src; else s.textContent = old.textContent;
+        old.parentNode.replaceChild(s, old);
+      });
+      safely(setupTopDeals);
+    }).catch(function (err) {
+      console.error('[bf26] top deals:', err);
+      if (section) section.hidden = true; // nothing to show: leave the section out rather than an empty box
+    });
+  }
+
+  // The product list is the Bloomreach widget; the large panel cycles through its items
+  function setupTopDeals() {
     var featured = document.querySelector('[data-top-featured]');
     var widgetSlot = document.querySelector('[data-top-widget]');
     var progressBar = document.querySelector('.bf26-top__progress');
