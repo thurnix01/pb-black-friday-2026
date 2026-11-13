@@ -81,7 +81,7 @@
   align-items: flex-start;
   gap: 8px;
   max-width: 840px;
-  margin: 0 auto;
+  margin: 0 auto 63px;
   padding: 22px 40px 26px;
   overflow: hidden;
   background: radial-gradient(ellipse 52% 124% at 90% 34%, rgba(44, 0, 0, .81), rgba(28, 5, 5, .9) 50%, #0c0b0b 100%);
