@@ -158,3 +158,10 @@
   #bf26#bf26 .bf26-promo__title { font-size: 30px; }
   #bf26 .bf26-promo__copy { font-size: 16px; }
 }
+
+/* --- Results filter applied on page load (initResultsFilter in main.js) ----------
+   While it loads, the site fades the page and shows a spinner; skip that look for this one update. */
+
+html.bf26-quiet-load body.ajax-request-pending:not(#checkoutPages) { cursor: auto !important; }
+html.bf26-quiet-load body.ajax-request-pending > * { opacity: 1 !important; }
+html.bf26-quiet-load body.ajax-request-pending #page-loading { display: none !important; }
