@@ -692,6 +692,61 @@
     align();
   }
 
+  /* --- Results filter that's always on (jump-off pages) -------------------- */
+
+  // <main id="bf26" data-results-filter="fs2"> ticks that filter (fs2 = On Special) in the results below
+  // when the page opens. A filtered address (?fs=2) can't be used instead: the site drops this page's
+  // content from it. So the box is ticked here, the site reloads the results itself, and the address
+  // stays the plain page URL so a refresh or shared link still shows this page.
+  // The site wires up its checkboxes a moment after load, so a click that doesn't send the site's
+  // results request is undone and tried again.
+  function initResultsFilter() {
+    var page = document.getElementById('bf26');
+    var value = page && page.getAttribute('data-results-filter');
+    if (!value) return;
+    var RESULTS_REQUEST = /search-results\/load-page/;
+    var tries = 0;
+    var sent = false;
+    var open = XMLHttpRequest.prototype.open;
+    var push = window.history.pushState;
+    var url = window.location.href;
+
+    function stop() {
+      XMLHttpRequest.prototype.open = open;
+      window.history.pushState = push;
+    }
+    function attempt() {
+      var box = document.querySelector('input[type=checkbox][value="' + value + '"]');
+      if (box && !box.checked) {
+        sent = false;
+        box.click();
+        setTimeout(function () {
+          if (sent) return setTimeout(stop, 4000); // let the site finish updating the address first
+          box.checked = false; // not wired up yet: undo and try again
+          retry();
+        }, 300);
+      } else if (!box) {
+        retry();
+      } else {
+        stop(); // already ticked
+      }
+    }
+    function retry() {
+      if (++tries < 30) setTimeout(attempt, 300);
+      else stop();
+    }
+
+    XMLHttpRequest.prototype.open = function (method, address) {
+      if (RESULTS_REQUEST.test(address)) sent = true;
+      return open.apply(this, arguments);
+    };
+    window.history.pushState = function (state, title) {
+      window.history.replaceState(state, title, url);
+    };
+    if (document.readyState === 'complete') attempt();
+    else window.addEventListener('load', attempt, { once: true });
+  }
+
   /* --- Preview badge ------------------------------------------------------- */
 
   function showPreviewBadge(value) {
@@ -715,6 +770,7 @@
   safely(initSignup);
   safely(initReveal);
   safely(initAnchorFix);
+  safely(initResultsFilter);
 
   setInterval(function () {
     var t = now();
