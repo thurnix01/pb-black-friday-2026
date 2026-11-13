@@ -9,9 +9,10 @@
 
 // Logos: SVGs from the "All Logos" Figma file (Cycling Logos frame) in assets/brands/; brands not in that
 // file are traced from the brand's own logo. id = the brand's site ID (performancebike.com/.../b<id>),
-// used for the Black Friday results link (?fb=<id>). `as` shows another brand's card with extra wording.
+// used for the Black Friday results link (?fb=<id>). `url` sends the card somewhere else instead (e.g. the
+// brand's own Black Friday page). `as` shows another brand's card with extra wording.
 window.BF26_BRANDS = {
-  'Specialized': { logo: 'assets/brands/specialized.svg', id: 2231 },
+  'Specialized': { logo: 'assets/brands/specialized.svg', id: 2231, url: 'https://www.performancebike.com/specialized/b2231' },
   'SRAM': { logo: 'assets/brands/sram.svg', id: 1509 },
   'Shimano': { logo: 'assets/brands/shimano.svg', id: 1468 },
   'Continental': { logo: 'assets/brands/continental.svg', id: 1046 },
