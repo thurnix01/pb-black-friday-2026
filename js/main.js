@@ -318,7 +318,9 @@
       if (!res.ok) throw new Error('widget page ' + res.status);
       return res.text();
     }).then(function (html) {
-      var block = new DOMParser().parseFromString(html, 'text/html').getElementById('bf26-widget');
+      // Either just the token in <div id="bf26-widget">, or a copy of this whole page (its Top Deals box)
+      var doc = new DOMParser().parseFromString(html, 'text/html');
+      var block = doc.getElementById('bf26-widget') || doc.querySelector('[data-top-widget]');
       if (!block || !block.querySelector('.scroll-item')) throw new Error('no widget items on ' + src);
       widgetSlot.innerHTML = block.innerHTML;
       // Scripts added through innerHTML don't run; re-add the widget's own so they do
