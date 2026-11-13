@@ -560,7 +560,8 @@
     if (!info || !info.logo) return '';
     var label = tile.label || 'Shop deals';
     var size = label.length > 16 ? ' is-longer' : label.length > 10 ? ' is-long' : '';
-    return '<li class="bf26-bsale"><a href="' + BRAND_LINK.replace('{id}', info.id) + '">' +
+    var href = info.url || BRAND_LINK.replace('{id}', info.id);
+    return '<li class="bf26-bsale"><a href="' + escapeHtml(href) + '">' +
       '<span class="bf26-bsale__logo"><img src="' + escapeHtml(asset(info.logo)) + '" alt="' + escapeHtml(tile.brand) + '" loading="lazy"></span>' +
       '<span class="bf26-bsale__off' + size + '"><span>' + escapeHtml(label) + '</span></span>' +
     '</a></li>';
