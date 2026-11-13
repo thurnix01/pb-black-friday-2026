@@ -699,21 +699,43 @@
   // content from it. So the box is ticked here, the site reloads the results itself, and the address
   // stays the plain page URL so a refresh or shared link still shows this page.
   // The site wires up its checkboxes a moment after load, so a click that doesn't send the site's
-  // results request is undone and tried again.
+  // results request is undone and tried again. This update happens without the site's loading look
+  // (page fade + spinner, hidden by .bf26-quiet-load in bf-jumpoffs.css) and without its jump down
+  // to the results; filters the shopper picks afterwards behave as usual.
   function initResultsFilter() {
     var page = document.getElementById('bf26');
     var value = page && page.getAttribute('data-results-filter');
     if (!value) return;
     var RESULTS_REQUEST = /search-results\/load-page/;
+    var root = document.documentElement;
     var tries = 0;
     var sent = false;
+    var stopped = false;
     var open = XMLHttpRequest.prototype.open;
     var push = window.history.pushState;
     var url = window.location.href;
+    var anchor = null;
+    var watcher = null;
 
     function stop() {
+      if (stopped) return;
+      stopped = true;
       XMLHttpRequest.prototype.open = open;
       window.history.pushState = push;
+      if (anchor) delete anchor.scrollIntoView;
+      if (watcher) watcher.disconnect();
+      root.classList.remove('bf26-quiet-load');
+    }
+    function quiet() {
+      root.classList.add('bf26-quiet-load');
+      // The site calls #scroll-to-results.scrollIntoView() once the new results are in
+      anchor = document.getElementById('scroll-to-results');
+      if (anchor) anchor.scrollIntoView = function () {};
+      // Finished when the site takes its loading class off <body> (after it has run its scroll)
+      watcher = new MutationObserver(function () {
+        if (sent && !document.body.classList.contains('ajax-request-pending')) stop();
+      });
+      watcher.observe(document.body, { attributes: true, attributeFilter: ['class'] });
     }
     function attempt() {
       var box = document.querySelector('input[type=checkbox][value="' + value + '"]');
@@ -721,7 +743,7 @@
         sent = false;
         box.click();
         setTimeout(function () {
-          if (sent) return setTimeout(stop, 4000); // let the site finish updating the address first
+          if (sent) return setTimeout(stop, 10000); // backstop if the site never finishes
           box.checked = false; // not wired up yet: undo and try again
           retry();
         }, 300);
@@ -743,8 +765,9 @@
     window.history.pushState = function (state, title) {
       window.history.replaceState(state, title, url);
     };
-    if (document.readyState === 'complete') attempt();
-    else window.addEventListener('load', attempt, { once: true });
+    function begin() { quiet(); attempt(); }
+    if (document.readyState === 'complete') begin();
+    else window.addEventListener('load', begin, { once: true });
   }
 
   /* --- Preview badge ------------------------------------------------------- */
