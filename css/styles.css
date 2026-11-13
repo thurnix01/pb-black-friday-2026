@@ -1389,5 +1389,8 @@ a:hover, span.link:hover { color: revert-rule; }
 .breadcrumb {display: none !important}
 @media (min-width: 767px) { #searchpage .flex-wrapper {  margin: 12px auto 0 !important; max-width: 1000px !important; } }
 ._recommended-accessory-marketing { max-height: 284px !important; justify-content: end !important; }
-@media (max-width: 767px) { #searchpage { padding: 0 !important; } }
-@media only screen and (max-width: 700px) { #searchpage .titlebar { display: none !important; } }
+@media (max-width: 767px) {
+  #searchpage { padding: 0 !important; }
+  /* The filter bar's -8px side margins offset #searchpage padding we remove above; without this it causes horizontal scroll */
+  .upperhtml #filter-buttons { margin-left: 0 !important; margin-right: 0 !important; }
+}
