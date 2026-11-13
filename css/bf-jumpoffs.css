@@ -4,6 +4,8 @@
    components; this file only adds the brand version of the hero and the Pre-Black Friday banner.
    ========================================================================== */
 
+.bf26-section { margin-bottom: 32px; }
+
 /* --- Hero: brand version ------------------------------------------------------
    Same banner, photo and shapes as the main hero. The logo + "PRE" sit at 0.769x the
    main hero's size (same bf-logo.svg), with a divider and "Save up to 70%" + brand logo
