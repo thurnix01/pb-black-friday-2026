@@ -97,7 +97,7 @@
 }
 .bf26-promo::before {
   inset: 0;
-  background: url("../assets/jumpoffs/promo-photo.jpg") center bottom / cover no-repeat;
+  background: url("https://images.amain.com/images/contentpages/performancebike/black-friday-2026/assets/jumpoffs/promo-photo.jpg") center bottom / cover no-repeat;
   mix-blend-mode: luminosity;
   opacity: .0625;
 }
@@ -106,7 +106,7 @@
   top: -85.32%;
   width: 75.52%;
   height: 286.09%;
-  background: url("../assets/jumpoffs/promo-shape.png") center / 100% 100% no-repeat;
+  background: url("https://images.amain.com/images/contentpages/performancebike/black-friday-2026/assets/jumpoffs/promo-shape.png") center / 100% 100% no-repeat;
 }
 #bf26 .bf26-promo__eyebrow,
 #bf26#bf26 .bf26-promo__title {
