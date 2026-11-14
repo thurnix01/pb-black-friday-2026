@@ -323,12 +323,26 @@
       var block = doc.getElementById('bf26-widget') || doc.querySelector('[data-top-widget]');
       if (!block || !block.querySelector('.scroll-item')) throw new Error('no widget items on ' + src);
       widgetSlot.innerHTML = block.innerHTML;
-      // Scripts added through innerHTML don't run; re-add the widget's own so they do
-      Array.prototype.forEach.call(widgetSlot.querySelectorAll('script'), function (old) {
-        var s = document.createElement('script');
-        if (old.src) s.src = old.src; else s.textContent = old.textContent;
-        old.parentNode.replaceChild(s, old);
-      });
+      // Scripts added through innerHTML don't run; re-add the widget's own so they do. They do their work
+      // (View Item for "From" prices, Was/Sale for variant products) on DOMContentLoaded, which has
+      // already happened here, so those handlers are run straight away while the scripts are added.
+      var addListener = document.addEventListener;
+      document.addEventListener = function (type, fn) {
+        if (type === 'DOMContentLoaded') {
+          try { fn.call(document, new Event(type)); } catch (err) { console.error('[bf26] widget script:', err); }
+          return;
+        }
+        return addListener.apply(this, arguments);
+      };
+      try {
+        Array.prototype.forEach.call(widgetSlot.querySelectorAll('script'), function (old) {
+          var s = document.createElement('script');
+          if (old.src) s.src = old.src; else s.textContent = old.textContent;
+          old.parentNode.replaceChild(s, old); // inline scripts run as they're added
+        });
+      } finally {
+        document.addEventListener = addListener;
+      }
       safely(setupTopDeals);
     }).catch(function (err) {
       console.error('[bf26] top deals:', err);
