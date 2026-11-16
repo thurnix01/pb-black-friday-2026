@@ -13,8 +13,8 @@
 // brand's own Black Friday page). `as` shows another brand's card with extra wording.
 window.BF26_BRANDS = {
   'Specialized': { logo: 'assets/brands/specialized.svg', id: 2231, url: 'https://www.performancebike.com/specialized/b2231' },
-  'SRAM': { logo: 'assets/brands/sram.svg', id: 1509 },
-  'Shimano': { logo: 'assets/brands/shimano.svg', id: 1468 },
+  'SRAM': { logo: 'assets/brands/sram.svg', id: 1509, url: 'https://www.performancebike.com/sram/b1509' },
+  'Shimano': { logo: 'assets/brands/shimano.svg', id: 1468, url: 'https://www.performancebike.com/shimano-wheels-groupsets-brakes-chains-cranksets/b1468' },
   'Continental': { logo: 'assets/brands/continental.svg', id: 1046 },
   'Fizik': { logo: 'assets/brands/fizik.svg', id: 1136 },
   'Crankbrothers': { logo: 'assets/brands/crankbrothers.svg', id: 1051 },
