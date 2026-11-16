@@ -373,9 +373,10 @@
       return item.querySelector('.recommended-accessory-marketing-' + name + ', ._recommended-accessory-marketing-' + name);
     }
 
-    // Prices: "Was / Sale" when the widget shows a strikethrough price, otherwise "From"
+    // Prices: "Was / Sale" when the widget shows a strikethrough price, otherwise "From".
+    // Runs again whenever the widget's own scripts have rewritten the price after us
     function labelPrice(el) {
-      if (!el || el.hasAttribute('data-bf26-price')) return;
+      if (!el || el.querySelector('.bf26-price__sale')) return;
       var was = el.querySelector('s');
       var rest = el.textContent.replace(was ? was.textContent : '', '');
       var amounts = rest.match(/\$[\d,]+(?:\.\d\d)?/g) || [];
@@ -387,9 +388,41 @@
         el.innerHTML = '<span class="bf26-price__line"><span class="bf26-price__from">From </span>' +
           '<span class="bf26-price__sale">' + escapeHtml(amounts[0]) + '</span></span>';
       }
-      el.setAttribute('data-bf26-price', '');
     }
-    items.forEach(function (item) { labelPrice(part(item, 'price')); });
+    function labelPrices() {
+      items.forEach(function (item) { labelPrice(part(item, 'price')); });
+    }
+    labelPrices();
+
+    // Products with sizes/colours come through with only their regular price. The widget's script copies
+    // the sale price from the matching card in the page's results, but most aren't in the results (e.g. on
+    // the main page). Their product page opens on a default variant and shows its Was / Sale price: use that.
+    // A parent product can't go in the cart, so its button stays View Item, linking to that variant
+    function fillSalePrices() {
+      items.forEach(function (item) {
+        var price = part(item, 'price');
+        var button = part(item, 'button');
+        var link = part(item, 'title') || item.querySelector('a[href]');
+        if (!price || price.querySelector('s') || !link || link.host !== location.host) return;
+        fetch(link.href, { credentials: 'same-origin' }).then(function (res) {
+          if (!res.ok) throw new Error('product page ' + res.status);
+          return res.text().then(function (html) { return { url: res.url, html: html }; });
+        }).then(function (page) {
+          var box = new DOMParser().parseFromString(page.html, 'text/html').querySelector('.productsinfobar .price');
+          var was = box && box.querySelector('s');
+          var sale = box && box.querySelector('.theprice td');
+          if (!was || !sale || price.querySelector('s')) return; // not on sale, or already filled in
+          price.innerHTML = '<s>' + escapeHtml(was.textContent.trim()) + '</s> ' + escapeHtml(sale.textContent.trim());
+          labelPrice(price);
+          if (button) {
+            button.textContent = 'View Item';
+            button.href = page.url;
+            button.removeAttribute('onclick');
+          }
+          if (item === items[active]) show(active);
+        }).catch(function (err) { console.error('[bf26] top deals price:', err); });
+      });
+    }
 
     // Read each product when it's shown: the widget's scripts rename titles and buttons after load
     function productOf(item) {
@@ -514,6 +547,7 @@
     // The first featured item starts collapsed without animating
     var started = false;
     function start() {
+      labelPrices();
       if (started) { show(active); return; } // later call: re-read the item the widget just updated
       started = true;
       list.classList.add('bf26-instant');
@@ -525,6 +559,9 @@
     // that event can fire after this runs, so start now if the page is ready and refresh when it fires
     document.addEventListener('DOMContentLoaded', start);
     if (document.readyState !== 'loading') start();
+    // Missing sale prices: once the widget's scripts have had their turn
+    if (document.readyState === 'complete') fillSalePrices();
+    else window.addEventListener('load', function () { start(); fillSalePrices(); });
   }
 
   /* --- Daily Brand Deals --------------------------------------------------- */
