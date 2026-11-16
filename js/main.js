@@ -318,9 +318,11 @@
       if (!res.ok) throw new Error('widget page ' + res.status);
       return res.text();
     }).then(function (html) {
-      // Either just the token in <div id="bf26-widget">, or a copy of this whole page (its Top Deals box)
+      // The token in <div id="bf26-widget">, the bare token as the page's only content, or a copy of this
+      // whole page (its Top Deals box)
       var doc = new DOMParser().parseFromString(html, 'text/html');
-      var block = doc.getElementById('bf26-widget') || doc.querySelector('[data-top-widget]');
+      var block = doc.getElementById('bf26-widget') || doc.querySelector('[data-top-widget]') ||
+        doc.querySelector('#page-content .page-block');
       if (!block || !block.querySelector('.scroll-item')) throw new Error('no widget items on ' + src);
       widgetSlot.innerHTML = block.innerHTML;
       // Scripts added through innerHTML don't run; re-add the widget's own so they do. They do their work
