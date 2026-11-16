@@ -33,7 +33,7 @@ window.BF26_BRANDS = {
   'Schwalbe': { logo: 'assets/brands/schwalbe.svg', id: 1456 },
   'Lazer': { logo: 'assets/brands/lazer.svg', id: 1265 },
   'Terry': { logo: 'assets/brands/terry.svg', id: 1561 },
-  'Delta': { logo: 'assets/brands/delta.svg', id: 1074 }, // traced from Delta's site logo (no vector available)
+  'Delta': { logo: 'assets/brands/delta.png', id: 1074 },
   'WTB': { logo: 'assets/brands/wtb.svg', id: 1653 },
   'Almsthre': { logo: 'assets/brands/almsthre.svg', id: 4284 }, // traced from Almsthre's site logo (no vector available)
   'Continental Tire': { as: 'Continental' },
