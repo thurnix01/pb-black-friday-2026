@@ -4,7 +4,7 @@
    ========================================================================== */
 
 /* Brand fonts: a locally installed copy first, then the webfonts performancebike.com
-   already hosts (same files the old Black Friday page used). Google fonts are the last fallback */
+   already hosts */
 @font-face {
   font-family: "BF Tungsten";
   src: local("Tungsten Medium"), local("Tungsten-Medium"),
@@ -155,7 +155,7 @@ a:hover, span.link:hover { color: revert-rule; }
   top: -19.4cqw;
   width: 100.1cqw;
   height: 66.8cqw;
-  background: url("../assets/hero/hero-photo.jpg") center / cover no-repeat;
+  background: url("https://images.amain.com/images/contentpages/performancebike/black-friday-2026/assets/hero/hero-photo.jpg") center / cover no-repeat;
   mix-blend-mode: lighten;
   animation: bf26-drift 20s ease-in-out infinite alternate;
 }
@@ -443,8 +443,8 @@ a:hover, span.link:hover { color: revert-rule; }
   margin-right: 6px;
   vertical-align: -1px;
   background: currentColor;
-  -webkit-mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 14'><path d='M3 6V4a3 3 0 0 1 6 0v2h1a1 1 0 0 1 1 1v6a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1zm1.5 0h3V4a1.5 1.5 0 0 0-3 0z'/></svg>") center / contain no-repeat;
-          mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 14'><path d='M3 6V4a3 3 0 0 1 6 0v2h1a1 1 0 0 1 1 1v6a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1zm1.5 0h3V4a1.5 1.5 0 0 0-3 0z'/></svg>") center / contain no-repeat;
+  -webkit-mask: url("data:image/svg+xml;utf8,<svg xmlns='http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg' viewBox='0 0 12 14'><path d='M3 6V4a3 3 0 0 1 6 0v2h1a1 1 0 0 1 1 1v6a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1zm1.5 0h3V4a1.5 1.5 0 0 0-3 0z'/></svg>") center / contain no-repeat;
+          mask: url("data:image/svg+xml;utf8,<svg xmlns='http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg' viewBox='0 0 12 14'><path d='M3 6V4a3 3 0 0 1 6 0v2h1a1 1 0 0 1 1 1v6a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1zm1.5 0h3V4a1.5 1.5 0 0 0-3 0z'/></svg>") center / contain no-repeat;
 }
 
 /* Name + prices sit on the bar; longer names grow upward. z-index keeps text above the pop-out image */
@@ -475,6 +475,14 @@ a:hover, span.link:hover { color: revert-rule; }
   text-decoration: line-through;
 }
 .bf26-deal__sale { font-size: 38px; color: var(--bf-orange); }
+.bf26-deal__window {
+  margin: -2px 0 6px !important;
+  font-size: 15px;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  color: var(--bf-mid-grey);
+}
+.bf26-deal__coupon { color: var(--bf-orange); }
 
 .bf26-deal__more {
   position: absolute;
@@ -675,7 +683,7 @@ a:hover, span.link:hover { color: revert-rule; }
 .bf26-signup__optin { display: flex; align-items: center; gap: 6px; margin-right: auto; font-size: 14px; }
 .bf26-signup__optin input[type=checkbox] { width: 16px; height: 16px; margin: 0; accent-color: var(--bf-orange); }
 .bf26-signup .section + .section > div:has(> .field-validation-valid) { display: none; }
-.bf26-signup .bf26-recaptcha { zoom: .8; margin-right: auto; } /* Google's box is a fixed 304 x 78; button stays right */
+.bf26-signup .bf26-recaptcha { zoom: .8; margin-right: auto; } 
 
 /* Sign-up confirmation: a plain white alert in the middle of the screen, closes itself after 4s (main.js).
    No backdrop, so the page stays usable around it */
@@ -1082,7 +1090,7 @@ a:hover, span.link:hover { color: revert-rule; }
   border-radius: 50%;
   background: rgba(70, 70, 71, .85);
   color: var(--bf-white);
-  font-size: 0; /* the ‹ › characters sit off-center in the site's fonts; the chevron is drawn below */
+  font-size: 0; /* the single angle quote characters sit off-center in the site's fonts; the chevron is drawn below */
   line-height: 1;
   cursor: pointer;
   transition: opacity .3s, transform .25s var(--bf-ease), background .2s;
@@ -1197,6 +1205,89 @@ a:hover, span.link:hover { color: revert-rule; }
   transition: transform .4s var(--bf-ease);
 }
 .bf26-bsale a:hover .bf26-bsale__off::before { transform: none; }
+
+/* --- Coupon Codes (Figma: Coupon-card, 204 x 308) ----------------------------
+   #bf26#bf26 on the text: outranks the #bf26#bf26 p reset. Same width and corners as the brand cards; a dashed inner border like a cut-out coupon */
+
+#bf26#bf26 #bf26-coupons-title { margin-bottom: 32px; } /* three IDs: outranks the #bf26#bf26 h2 reset */
+.bf26-coupons {
+  display: grid;
+  grid-template-columns: repeat(4, 220px);
+  justify-content: center;
+  gap: 24px;
+  max-width: 952px;
+  margin: 0 auto;
+}
+#bf26#bf26 .bf26-coupons { margin: 0 auto; } /* beats the ul reset above */
+@media (max-width: 980px) { .bf26-coupons { grid-template-columns: repeat(2, 220px); } } /* phones: see the 640px block */
+#bf26#bf26 .bf26-coupon {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 26px 18px 22px;
+  border-radius: 20px;
+  background: var(--bf-card);
+  text-align: center;
+  font-family: var(--bf-font-body);
+  color: var(--bf-black);
+  /* Dashed line 9px in from the edge */
+  outline: 2px dashed #c1bfbf;
+  outline-offset: -11px;
+}
+#bf26#bf26 .bf26-coupon__amount {
+  font-family: var(--bf-font-display);
+  font-weight: 500;
+  font-size: 40px;
+  line-height: 1;
+  color: var(--bf-orange);
+}
+#bf26#bf26 .bf26-coupon__min { margin-top: 6px; font-size: 11px; line-height: 1.3; text-transform: uppercase; }
+#bf26#bf26 .bf26-coupon__label { margin-top: 22px; font-size: 11px; }
+.bf26-coupon__code {
+  margin-top: 2px;
+  font-family: var(--bf-font-display);
+  font-weight: 500;
+  font-size: 44px;
+  line-height: 1;
+  letter-spacing: .01em;
+  color: var(--bf-black) !important;
+}
+.bf26-coupon__btn {
+  position: relative;
+  display: grid;
+  place-items: center;
+  height: 36px;
+  margin-top: 14px;
+  padding: 2px 20px 0;
+  overflow: hidden;
+  border-radius: 3px;
+  background: #333;
+  font-family: var(--bf-font-body);
+  font-size: 13px;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--bf-white) !important;
+}
+.bf26-coupon__btn span { position: relative; }
+/* Orange wipe on hover, like the brand cards */
+.bf26-coupon__btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--bf-orange);
+  transform: translateX(-101%);
+  transition: transform .4s var(--bf-ease);
+}
+.bf26-coupon__btn:hover::before { transform: none; }
+#bf26#bf26 .bf26-coupon__expires {
+  align-self: stretch;
+  margin: 26px 8px 0;
+  padding-top: 26px;
+  border-top: 1px solid #c1bfbf;
+  font-size: 12px;
+}
+#bf26#bf26 .bf26-coupon__terms { margin-top: 10px; font-size: 10.5px; line-height: 1.35; }
+#bf26#bf26 .bf26-coupon__terms a { font-weight: 700; text-decoration: underline; }
 
 /* --- Sales by Categories (dark band) ---------------------------------------- */
 
@@ -1348,6 +1439,13 @@ a:hover, span.link:hover { color: revert-rule; }
   .bf26-bsale__off { height: 54px; font-size: 30px; }
   .bf26-bsale__off.is-long { font-size: 23px; }
   .bf26-bsale__off.is-longer { font-size: 17px; }
+  /* Coupons: two columns */
+  .bf26-coupons { grid-template-columns: repeat(2, minmax(0, 220px)); gap: 14px; }
+  #bf26#bf26 .bf26-coupon { padding: 22px 14px 18px; border-radius: 16px; outline-offset: -9px; }
+  #bf26#bf26 .bf26-coupon__amount { font-size: 32px; }
+  .bf26-coupon__code { font-size: 36px; }
+  .bf26-coupon__btn { height: 34px; padding: 2px 10px 0; font-size: 11px; }
+  #bf26#bf26 .bf26-coupon__expires { margin: 20px 0 0; padding-top: 18px; font-size: 11px; }
   /* Categories: two even columns */
   .bf26-categories__links {
     display: grid;
@@ -1393,5 +1491,5 @@ a:hover, span.link:hover { color: revert-rule; }
 @media (max-width: 767px) {
   #searchpage { padding: 0 !important; }
   /* The filter bar's -8px side margins offset #searchpage padding we remove above; without this it causes horizontal scroll */
-  .upperhtml #filter-buttons { margin-left: 0 !important; margin-right: 0 !important; }
+  #searchpage #filter-buttons { margin-left: 0 !important; margin-right: 0 !important; }
 }
