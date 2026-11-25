@@ -713,6 +713,70 @@ a:hover, span.link:hover { color: revert-rule; }
 }
 @keyframes bf26-toast-in { from { opacity: 0; transform: translateY(10px); } }
 
+/* --- Black Friday Bonus (BFSAVE10; same look as the Coupon Eligible Items page) -----
+   #bf26#bf26 on the text: outranks the #bf26#bf26 p / h2 / a resets */
+
+.bf26-bonus {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 24px 40px;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 28px 40px;
+  background: var(--bf-light-grey);
+  font-family: var(--bf-font-body);
+}
+#bf26#bf26 .bf26-bonus__eyebrow {
+  font-size: 14px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--bf-orange);
+}
+#bf26#bf26 .bf26-bonus__title {
+  margin-top: 4px;
+  font-family: var(--bf-font-display);
+  font-size: 48px;
+  line-height: 1;
+  letter-spacing: 0;
+}
+#bf26#bf26 .bf26-bonus__text { margin-top: 8px; font-size: 17px; color: var(--bf-dark-grey); }
+#bf26#bf26 .bf26-bonus__text strong { color: var(--bf-black); }
+#bf26#bf26 .bf26-bonus__text a { color: var(--bf-black); text-decoration: underline; }
+#bf26#bf26 .bf26-bonus__text a:hover { color: var(--bf-orange); }
+.bf26-bonus__code { display: flex; flex-direction: column; align-items: center; }
+.bf26-bonus__chip {
+  display: flex;
+  align-items: stretch;
+  border: 2px dashed var(--bf-black);
+  background: var(--bf-white);
+}
+.bf26-bonus__value {
+  padding: 10px 22px 5px;
+  font-family: var(--bf-font-display);
+  font-size: 34px;
+  letter-spacing: .08em;
+  line-height: 1.1;
+  user-select: all;
+}
+.bf26-bonus__copy {
+  min-width: 108px;
+  padding: 6px 18px 0;
+  border: 0;
+  background: var(--bf-dark-grey);
+  color: var(--bf-white);
+  font-family: var(--bf-font-body);
+  font-size: 16px;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background .2s var(--bf-ease);
+}
+.bf26-bonus__copy:hover { background: var(--bf-black); }
+.bf26-bonus__copy.is-copied { background: var(--bf-orange); }
+.bf26-bonus__status { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+
 /* --- Sale by Discount ------------------------------------------------------- */
 
 .bf26-discounts {
@@ -1439,6 +1503,12 @@ a:hover, span.link:hover { color: revert-rule; }
   .bf26-bsale__off { height: 54px; font-size: 30px; }
   .bf26-bsale__off.is-long { font-size: 23px; }
   .bf26-bsale__off.is-longer { font-size: 17px; }
+  /* Bonus code: stacked, code full width */
+  .bf26-bonus { padding: 22px 16px; }
+  #bf26#bf26 .bf26-bonus__title { font-size: 38px; }
+  .bf26-bonus__code,
+  .bf26-bonus__chip { width: 100%; }
+  .bf26-bonus__value { flex: 1; text-align: center; font-size: 30px; }
   /* Coupons: two columns */
   .bf26-coupons { grid-template-columns: repeat(2, minmax(0, 220px)); gap: 14px; }
   #bf26#bf26 .bf26-coupon { padding: 22px 14px 18px; border-radius: 16px; outline-offset: -9px; }
