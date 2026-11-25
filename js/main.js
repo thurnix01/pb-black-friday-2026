@@ -4,6 +4,7 @@
  * - Top deals widget: rotating featured product + carousel
  * - Daily Brand Deals: today's brand discount cards (brand-sales-data.js)
  * - Doorbuster sign-up: the site's newsletter form (captcha + validation)
+ * - Black Friday Bonus: Copy button for the BFSAVE10 code
  * - Scroll reveal
  *
  * Preview any moment of the sale with ?preview=2026-11-24T09:30
@@ -121,7 +122,7 @@
             (isNext ? 'Unlocks in ' + formatCountdown(deal.start - t) : 'Coming soon') +
           '</span></p>' +
         '</div>' +
-        '<img class="bf26-deal__question" src="' + asset('assets/ui/question-mark.svg') + '" width="113" height="206" alt="">' +
+        '<img class="bf26-deal__question" src="' + asset('https://images.amain.com/images/contentpages/performancebike/black-friday-2026/assets/ui/question-mark.svg') + '" width="113" height="206" alt="">' +
       '</div>';
     }
 
@@ -133,6 +134,10 @@
           '<p class="bf26-deal__name">' + escapeHtml(deal.product) + '</p>' +
           '<p class="bf26-deal__was">Was: ' + money(deal.retail) + '</p>' +
           '<p class="bf26-deal__sale">Sale: ' + money(deal.sale) + '</p>' +
+          (state === 'live' ? '<p class="bf26-deal__window">' + (deal.coupon ?
+            '<span class="bf26-deal__coupon">' + (deal.coupon === true ? 'Coupon required' : 'Use code ' + escapeHtml(deal.coupon)) +
+            '</span> &middot; 24 hours only' :
+            '24 hours only, while supplies last') + '</p>' : '') +
         '</div>' +
         '<p class="bf26-deal__bar"><span>' +
           (state === 'live' ? 'Shop and Save ' + off + '%' : (deal.soldOut ? 'Sold out' : 'Deal ended')) +
@@ -216,6 +221,22 @@
     }
   }
 
+  // Long names (and the extra lines under the price) push the text up into the pop-out image,
+  // so each image is shortened to end just above its card's text
+  function fitMedia() {
+    cards.forEach(function (entry) {
+      var media = entry.el.querySelector('.bf26-deal__media');
+      var info = entry.el.querySelector('.bf26-deal__info');
+      if (!media || !info) return;
+      media.style.height = '';
+      var box = media.getBoundingClientRect();
+      if (!box.height) return; // hidden card
+      var scale = box.height / parseFloat(getComputedStyle(media).height); // zoom and slide animations
+      var room = (info.getBoundingClientRect().top - box.top) / scale - 4;
+      if (room < box.height / scale) media.style.height = Math.max(room, 100) + 'px';
+    });
+  }
+
   function layoutDoorbusters(t, changedEntries) {
     var animate = changedEntries && !reducedMotion;
     // Remember where each visible card sits, then slide it from there to its new place
@@ -228,6 +249,7 @@
       renderCard(entry, t, !!changedEntries && changedEntries.indexOf(entry) !== -1);
     });
     arrangeCards();
+    fitMedia();
     if (!animate) return;
     cards.forEach(function (entry) {
       var from = entry.from;
@@ -252,6 +274,9 @@
       cards.push({ deal: deal, el: document.createElement('li'), state: stateOf(deal, t) });
     });
     layoutDoorbusters(t, null);
+    // Text heights change once the brand fonts load and when phones switch the card sizes
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitMedia);
+    window.addEventListener('resize', fitMedia);
   }
 
   function tickDoorbusters(t) {
@@ -291,7 +316,7 @@
     var live = cards.filter(function (c) { return c.state === 'live'; })[0];
     var next = nextUpcoming();
     if (live) {
-      cdLabel.textContent = (live.deal.label ? live.deal.label + ' deal' : 'Today’s deal') + ' ends in';
+      cdLabel.textContent = (live.deal.label ? live.deal.label + ' deal' : 'Today\u2019s deal') + ' ends in';
       cdTime.textContent = formatCountdown(live.deal.end - t);
     } else if (next) {
       cdLabel.textContent = 'Next doorbuster drops in';
@@ -396,6 +421,22 @@
     }
     labelPrices();
 
+    // data-view-item on the widget (e.g. Tires, which come in sizes): every button is View Item to the product page,
+    // since Add to Cart would add whichever size the widget picked. Runs again after the widget swaps its buttons
+    var viewOnly = widgetSlot.hasAttribute('data-view-item');
+    function viewItemButtons() {
+      if (!viewOnly) return;
+      items.forEach(function (item) {
+        var button = part(item, 'button');
+        var link = part(item, 'title') || item.querySelector('a[href]');
+        if (!button || !link || /view item/i.test(button.textContent)) return;
+        button.textContent = 'View Item';
+        button.setAttribute('href', link.pathname + link.search + link.hash);
+        button.removeAttribute('onclick');
+      });
+    }
+    viewItemButtons();
+
     // Products with sizes/colours come through with only their regular price. The widget's script copies
     // the sale price from the matching card in the page's results, but most aren't in the results (e.g. on
     // the main page). Their product page opens on a default variant and shows its Was / Sale price: use that.
@@ -418,7 +459,8 @@
           labelPrice(price);
           if (button) {
             button.textContent = 'View Item';
-            button.href = page.url;
+            var to = new URL(page.url);
+            button.setAttribute('href', to.pathname + to.search + to.hash); // site-relative, like the page's other links
             button.removeAttribute('onclick');
           }
           if (item === items[active]) show(active);
@@ -459,7 +501,7 @@
       active = (i + items.length) % items.length;
       var p = productOf(items[active]);
       var url = escapeHtml(p.url);
-      var addToCart = /add to cart/i.test(p.cta) && p.id && typeof window.AddToCart === 'function';
+      var addToCart = !viewOnly && /add to cart/i.test(p.cta) && p.id && typeof window.AddToCart === 'function';
       featured.innerHTML =
         '<div class="bf26-feature">' +
           '<a class="bf26-feature__media" href="' + url + '">' +
@@ -550,6 +592,7 @@
     var started = false;
     function start() {
       labelPrices();
+      viewItemButtons();
       if (started) { show(active); return; } // later call: re-read the item the widget just updated
       started = true;
       list.classList.add('bf26-instant');
@@ -568,7 +611,7 @@
 
   /* --- Daily Brand Deals --------------------------------------------------- */
 
-  var BRAND_LINK = 'https://www.performancebike.com/black-friday/c16804?fb={id}&lg=fb#scroll-to-results';
+  var BRAND_LINK = '/black-friday/c16804?fb={id}&lg=fb#scroll-to-results';
 
   // Today's date in Pacific time as YYYY-MM-DD (the sheet's days switch at midnight Pacific)
   function saleDay(t) {
@@ -602,7 +645,7 @@
         return;
       }
       var sale = (every.sales || []).filter(function (w) { return day >= w.from && day <= w.to; })[0];
-      tiles.push({ brand: every.name, label: sale ? sale.label : '' });
+      tiles.push({ brand: every.name, label: sale ? sale.label : every.label || '' });
     });
     dayTiles.forEach(function (t) { if (!t.used) tiles.push(t); });
     return tiles;
@@ -712,6 +755,34 @@
     toast.addEventListener('click', close);
     document.addEventListener('keydown', onKey);
     setTimeout(close, 4000);
+  }
+
+  /* --- Black Friday Bonus: Copy button ------------------------------------ */
+
+  function initBonusCopy() {
+    var btn = document.querySelector('.bf26-bonus__copy');
+    if (!btn) return;
+    var status = document.querySelector('.bf26-bonus__status');
+    btn.addEventListener('click', function () {
+      var code = btn.getAttribute('data-copy');
+      function done() {
+        btn.textContent = 'Copied!';
+        btn.classList.add('is-copied');
+        if (status) status.textContent = 'Code ' + code + ' copied';
+        setTimeout(function () { btn.textContent = 'Copy'; btn.classList.remove('is-copied'); }, 2000);
+      }
+      // Older copy: select the code and copy it (also used when the browser refuses clipboard access)
+      function fallback() {
+        var range = document.createRange();
+        range.selectNodeContents(document.getElementById('bf26-bonus-code'));
+        var sel = window.getSelection();
+        sel.removeAllRanges();
+        sel.addRange(range);
+        try { if (document.execCommand('copy')) done(); } catch (e) {}
+      }
+      if (navigator.clipboard && window.isSecureContext) navigator.clipboard.writeText(code).then(done, fallback);
+      else fallback();
+    });
   }
 
   /* --- Scroll reveal ------------------------------------------------------- */
@@ -874,6 +945,7 @@
   safely(initTopDeals);
   safely(initBrandSales);
   safely(initSignup);
+  safely(initBonusCopy);
   safely(initReveal);
   safely(initAnchorFix);
   safely(initResultsFilter);
